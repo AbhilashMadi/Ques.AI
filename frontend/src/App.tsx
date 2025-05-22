@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import Loader from '@components/common/loader';
 
 // Context Layers
 const ContextProvider = lazy(() => import('@context/provider'));
@@ -19,7 +20,7 @@ const Dashboard = lazy(() => import('@pages/dashboard'));
 function App() {
   return (
     <ContextProvider>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           {/* Public Layout */}
           <Route element={<PublicLayout />}>

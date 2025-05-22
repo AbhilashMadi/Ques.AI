@@ -26,6 +26,9 @@
       ],
       "@context/*": [
         "./src/context/*"
+      ],
+      "@pages/*": [
+        "./src/pages/*"
       ]
     }
   }

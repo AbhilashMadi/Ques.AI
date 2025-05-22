@@ -1,4 +1,7 @@
+import Button from '@/components/custom/button';
 
 export default function Dashboard() {
-  return (<div>Dashboard</div>)
+  return (<div>
+    <Button>Primary</Button>
+  </div>)
 }

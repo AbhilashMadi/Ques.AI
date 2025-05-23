@@ -7,6 +7,7 @@ const ContextProvider = lazy(() => import('@context/provider'));
 
 // Layouts
 const PublicLayout = lazy(() => import('@components/layouts/public-layout'));
+const LoginLayout = lazy(() => import('@components/layouts/login-layout'));
 const PrivateLayout = lazy(() => import('@components/layouts/private-layout'));
 
 // Public Pages
@@ -24,15 +25,17 @@ function App() {
         <Routes>
           {/* Public Layout */}
           <Route element={<PublicLayout />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="auth" element={<LoginLayout />}>
+              <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<RegisterPage />} />
+            </Route>
           </Route>
 
           {/* Private Layout */}
           <Route element={<PrivateLayout />}>
             {/* Default route for authenticated users */}
             <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
           </Route>
 
           {/* Catch-all redirect */}

@@ -33,7 +33,8 @@
 
     --radius: 0.75rem;
 
-    --font-sans: "Inter", "Roboto", sans-serif;
+    --font-primary: "Inter", "Roboto", sans-serif;
+    --font-secondary: "Montserrat", sans-serif;
     --font-mono: monospace;
   }
 
@@ -48,7 +49,7 @@
     --popover: 240 10% 12%;
     --popover-foreground: 240 5% 90%;
 
-    --primary: 258 90% 75%;
+    --primary: 272, 72%, 47%;
     --primary-foreground: 240 10% 9%;
 
     --secondary: 240 10% 18%;
@@ -120,8 +121,11 @@
 
   --radius: var(--radius);
 
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-primary);
   --font-mono: var(--font-mono);
+
+  --font-primary: var(--font-primary);
+  --font-secondary: var(--font-secondary);
 }
 
 body {

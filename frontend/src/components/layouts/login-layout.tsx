@@ -1,0 +1,58 @@
+import siderBgImg from '@assets/images/login-sider-bg.svg';
+import siderLogo from '@assets/images/login-sider-logo.svg';
+import logoImg from '@assets/images/login-logo.svg';
+import { Outlet } from 'react-router-dom';
+
+export default function LoginLayout() {
+  return (
+    <main className="grid grid-cols-1 md:grid-cols-3 min-h-screen">
+      {/* Sider Section */}
+      <section className="col-span-2 bg-gradient-to-tl to-[#3A0B63] from-[#C37EFF] hidden md:flex relative overflow-hidden p-16">
+        {/* Background image */}
+        <img
+          src={siderBgImg}
+          alt="Decorative background"
+          className="absolute inset-0 w-full h-full object-cover opacity-50"
+          height={200}
+          width={200}
+        // loading="lazy"
+        // decoding="async"
+        />
+
+        {/* Content container */}
+        <div className="space-y-12 absolute z-10">
+          {/* Logo */}
+          <img
+            src={siderLogo}
+            height={60}
+            width={250}
+            alt="Ques.AI Logo"
+            className="w-auto h-14"
+          />
+
+          {/* Taglines */}
+          <div className="space-y-6 text-primary-foreground font-secondary">
+            <h1 className="text-6xl">
+              Your podcast will <br />no longer just a hobby.
+            </h1>
+            <h2 className="text-2xl">
+              Supercharge Your Distribution <br />using our AI assistant
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      {/* Form Section */}
+      <section className="flex flex-col justify-around items-center">
+        <img
+          src={logoImg}
+          height={150}
+          width={150}
+          loading="lazy"
+          decoding="async"
+        />
+        <Outlet />
+      </section>
+    </main >
+  )
+}

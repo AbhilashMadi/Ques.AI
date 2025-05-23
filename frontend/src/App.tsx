@@ -14,6 +14,7 @@ const PrivateLayout = lazy(() => import('@components/layouts/private-layout'));
 const LoginPage = lazy(() => import('@pages/login-page'));
 const RegisterPage = lazy(() => import('@pages/register-page'));
 const NotFoundPage = lazy(() => import('@pages/not-found-page'));
+const OtpPage = lazy(() => import('@pages/otp-page'));
 
 // Private Pages
 const Dashboard = lazy(() => import('@pages/dashboard'));
@@ -28,6 +29,7 @@ function App() {
             <Route path="auth" element={<LoginLayout />}>
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
+              <Route path="otp" element={<OtpPage />} />
             </Route>
           </Route>
 

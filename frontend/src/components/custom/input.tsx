@@ -4,7 +4,7 @@ import Label from '@components/custom/label';
 
 export const inputVariantStyles = {
   default: cn(
-    'bg-background border border-input bg-muted',
+    'bg-background border border-input bg-white',
     'focus:ring-2 focus:ring-ring focus:border-primary',
     'placeholder:text-muted-foreground'
   ),

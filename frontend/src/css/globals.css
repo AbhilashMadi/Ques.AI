@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 @layer base {
   :root {
     /* Light mode - Podcast/AI Creator Theme */
@@ -31,8 +33,9 @@
     --input: 240 5% 90%;
     --ring: 258 90% 66%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
+    --text-size-base: 0.75rem;
     --font-primary: "Inter", "Roboto", sans-serif;
     --font-secondary: "Montserrat", sans-serif;
     --font-mono: monospace;

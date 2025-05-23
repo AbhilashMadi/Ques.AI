@@ -1,9 +1,11 @@
+import logoImg from '@assets/images/login-logo.svg';
 import siderBgImg from '@assets/images/login-sider-bg.svg';
 import siderLogo from '@assets/images/login-sider-logo.svg';
-import logoImg from '@assets/images/login-logo.svg';
 import { Outlet } from 'react-router-dom';
 
 export default function LoginLayout() {
+  // const { theme, setTheme } = useTheme();
+
   return (
     <main className="grid grid-cols-1 md:grid-cols-3 min-h-screen">
       {/* Sider Section */}
@@ -15,7 +17,7 @@ export default function LoginLayout() {
           className="absolute inset-0 w-full h-full object-cover opacity-50"
           height={200}
           width={200}
-        // loading="lazy"
+        // loading="lazy" // it is causing flashing on the screen and layout shift
         // decoding="async"
         />
 
@@ -43,13 +45,15 @@ export default function LoginLayout() {
       </section>
 
       {/* Form Section */}
-      <section className="flex flex-col justify-around items-center">
+      <section className="flex flex-col justify-center-safe gap-10 p-24">
+        {/* <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>{theme}</button> */}
         <img
           src={logoImg}
           height={150}
           width={150}
           loading="lazy"
           decoding="async"
+          className="mx-auto"
         />
         <Outlet />
       </section>

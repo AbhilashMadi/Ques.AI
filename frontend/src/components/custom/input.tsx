@@ -1,76 +1,93 @@
-import { cn } from '@/lib/utils';
-import { useId, type InputHTMLAttributes } from 'react';
-import { tv, type VariantProps } from 'tailwind-variants';
+import { type FC, type InputHTMLAttributes, useId } from 'react';
+import { cn } from '@lib/utils';
+import Label from '@components/custom/label';
 
-export const inputVarients = tv({
-  base: 'block w-full rounded-lg border text-sm p-2.5 focus:outline-none focus:ring-2 transition-all',
-  variants: {
-    status: {
-      default:
-        'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-500',
-      success:
-        'bg-green-50 border-green-500 text-green-900 placeholder-green-700 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-green-500 dark:text-green-400 dark:placeholder-green-500',
-      error:
-        'bg-red-50 border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-red-500 dark:text-red-500 dark:placeholder-red-500',
-    },
-  },
-  defaultVariants: {
-    status: 'default',
-  },
-});
+export const inputVariantStyles = {
+  default: cn(
+    'bg-background border border-input bg-muted',
+    'focus:ring-2 focus:ring-ring focus:border-primary',
+    'placeholder:text-muted-foreground'
+  ),
+  outline: cn(
+    'bg-transparent border-2 border-border',
+    'focus:border-primary focus:ring-1 focus:ring-ring',
+    'placeholder:text-muted-foreground/70'
+  ),
+  ghost: cn(
+    'bg-transparent border-b border-input',
+    'focus:border-primary focus:ring-0',
+    'placeholder:text-muted-foreground/60'
+  ),
+};
 
-export type InputVariants = VariantProps<typeof inputVarients>;
-
-interface InputProps extends InputHTMLAttributes<HTMLInputElement>, InputVariants {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  touched?: boolean;
+  isValid?: boolean;
+  className?: string;
   errorMessage?: string;
-  successMessage?: string;
+  required?: boolean;
+  id?: string;
+  variant?: 'default' | 'outline' | 'ghost';
+  inputSize?: 'sm' | 'md' | 'lg';
 }
 
-const Input = ({
+const Input: FC<InputProps> = ({
   label,
-  errorMessage,
-  successMessage,
-  status = 'default',
+  touched = false,
+  isValid = true,
   className,
+  errorMessage,
+  required = false,
   id,
-  ...props
-}: InputProps) => {
-  const customId = useId();
-  const inputId = id || props.name || `input-${customId}`;
-  const showError = status === 'error' && errorMessage;
-  const showSuccess = status === 'success' && successMessage;
+  variant = 'default',
+  inputSize = 'md',
+  disabled,
+  ...restProps
+}) => {
+  const uId = `input-${useId()}`;
+
+  // Size styles
+  const sizeStyles = {
+    sm: 'py-1.5 px-2.5 text-sm rounded-sm',
+    md: 'py-2 px-3 text-base rounded-md',
+    lg: 'py-3 px-4 text-lg rounded-lg',
+  };
+
+  // State styles
+  const stateStyles = cn(
+    !isValid && touched && 'border-destructive focus:border-destructive focus:ring-destructive/50',
+    disabled && 'opacity-50 cursor-not-allowed'
+  );
 
   return (
-    <div className="mb-6">
-      {label && (
-        <label
-          htmlFor={inputId}
-          className={cn(
-            'block mb-2 text-sm font-medium',
-            status === 'error'
-              ? 'text-red-700 dark:text-red-500'
-              : status === 'success'
-                ? 'text-green-700 dark:text-green-500'
-                : 'text-gray-900 dark:text-gray-300'
-          )}>
-          {label}
-        </label>
-      )}
-      <input
-        id={inputId}
-        className={cn(inputVarients({ status }), className)}
-        {...props}
+    <div className="grid w-full items-center gap-1.5">
+      <Label
+        htmlFor={id ?? uId}
+        required={required}
+        className={cn(
+          !isValid && touched && 'text-destructive',
+          disabled && 'opacity-50'
+        )}
+        children={label}
       />
-      {showError && (
-        <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-          <span className="font-medium">Oh, snapp!</span> {errorMessage}
-        </p>
-      )}
-      {showSuccess && (
-        <p className="mt-2 text-sm text-green-600 dark:text-green-500">
-          <span className="font-medium">Well done!</span> {successMessage}
-        </p>
+      <input
+        id={id ?? uId}
+        disabled={disabled}
+        {...restProps}
+        className={cn(
+          'w-full transition-colors',
+          'focus:outline-none focus:shadow-sm',
+          'file:border-0 file:bg-transparent file:text-sm file:font-medium',
+          inputVariantStyles[variant],
+          sizeStyles[inputSize],
+          stateStyles,
+          className
+        )}
+      />
+
+      {!isValid && touched && errorMessage && (
+        <p className="text-sm text-destructive mt-1">{errorMessage}</p>
       )}
     </div>
   );

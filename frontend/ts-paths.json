@@ -35,6 +35,12 @@
       ],
       "@configs/*": [
         "./src/configs/*"
+      ],
+      "@custom": [
+        "./src/components/custom/index.ts",
+      ],
+      "@icons": [
+        "./src/components/icons.tsx"
       ]
     }
   }

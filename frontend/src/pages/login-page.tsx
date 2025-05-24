@@ -1,9 +1,6 @@
-import Button from '@/components/custom/button';
-import Checkbox from '@/components/custom/checkbox';
-import Input from '@/components/custom/input';
-import SecretInput from '@/components/custom/secret-input';
 import { Link } from 'react-router-dom';
 import type { FormEvent } from 'react';
+import { Button, Input, SecretInput, Checkbox } from '@custom';
 
 export default function LoginPage() {
 

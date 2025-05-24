@@ -1,7 +1,7 @@
 import { useId, useState, type FC, type InputHTMLAttributes } from 'react';
 import { cn } from '@lib/utils';
-import Label from '@components/custom/label';
-import { EyeIcon, EyeCloseIcon } from '@components/icons'
+import { Label } from '@custom';
+import { EyeIcon, EyeCloseIcon } from '@icons'
 import { inputVariantStyles } from '@components/custom/input';
 
 interface SecretInputProps extends InputHTMLAttributes<HTMLInputElement> {

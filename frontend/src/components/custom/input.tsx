@@ -1,6 +1,6 @@
 import { type FC, type InputHTMLAttributes, useId } from 'react';
 import { cn } from '@lib/utils';
-import Label from '@components/custom/label';
+import { Label } from '@custom';
 
 export const inputVariantStyles = {
   default: cn(

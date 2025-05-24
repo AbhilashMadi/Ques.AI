@@ -1,5 +1,4 @@
-import Button from '@/components/custom/button';
-import Input from '@/components/custom/input';
+import { Button, Input } from '@custom'
 
 export default function ResetPassword() {
   return (

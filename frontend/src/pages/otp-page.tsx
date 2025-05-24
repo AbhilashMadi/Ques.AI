@@ -1,5 +1,4 @@
-import Button from '@/components/custom/button';
-import OtpInput from '@components/custom/otp-input';
+import { Button, OtpInput } from '@custom'
 
 export default function OtpPage() {
   return (<form className="space-y-4">

@@ -1,8 +1,6 @@
-import Button from '@/components/custom/button';
-import Input from '@/components/custom/input';
-import SecretInput from '@/components/custom/secret-input';
 import { Link } from 'react-router-dom';
 import type { FormEvent } from 'react';
+import { Button, SecretInput, Input } from '@custom';
 
 export default function RegisterPage() {
 

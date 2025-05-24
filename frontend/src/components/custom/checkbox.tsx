@@ -1,6 +1,6 @@
 
 import { useId, type FC } from 'react';
-import Label from '@components/custom/label';
+import { Label } from '@custom';
 import { cn } from '@/lib/utils';
 
 interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {

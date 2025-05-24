@@ -1,5 +1,4 @@
-import Button from '@/components/custom/button';
-import Input from '@/components/custom/input';
+import { Input, Button } from '@custom';
 import type { FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 

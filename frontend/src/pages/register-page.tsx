@@ -1,49 +1,71 @@
+import { SitePaths } from '@configs/site-config';
+import { Button, Input, SecretInput } from '@custom';
+import { useForm } from '@hooks/use-form';
+import ServerKeys from '@resources/server-keys';
+import { type RegisterFormInput, registerFormSchema } from '@schemas/register-form-schema';
 import { Link } from 'react-router-dom';
-import type { FormEvent } from 'react';
-import { Button, SecretInput, Input } from '@custom';
 
 export default function RegisterPage() {
-
-  const handleSubmit = (e: FormEvent<HTMLElement>) => {
-    e.preventDefault();
-  };
-
-  const handleReset = () => { };
+  const {
+    errors,
+    values,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    resetForm,
+  } = useForm<RegisterFormInput>({
+    initialValues: {
+      [ServerKeys.FULL_NAME]: '',
+      [ServerKeys.EMAIL]: '',
+      [ServerKeys.PASSWORD]: '',
+      [ServerKeys.CONFIRM_PASSWORD]: '',
+    },
+    validationSchema: registerFormSchema,
+    onSubmit: console.log,
+  });
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="space-y-5"
-    >
+    <form onSubmit={handleSubmit} onReset={resetForm} className="space-y-5">
       <div className="space-y-1.5">
         <Input
-          name="name"
-          type="text"
-          touched
+          name={ServerKeys.FULL_NAME}
+          value={values[ServerKeys.FULL_NAME]}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched[ServerKeys.FULL_NAME]}
+          errorMessage={errors[ServerKeys.FULL_NAME]}
           placeholder="Full Name"
         />
         <Input
-          name="email"
+          name={ServerKeys.EMAIL}
           type="email"
-          touched
+          value={values[ServerKeys.EMAIL]}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched[ServerKeys.EMAIL]}
+          errorMessage={errors[ServerKeys.EMAIL]}
           placeholder="Email Address"
         />
         <SecretInput
-          name="password"
-          touched
+          name={ServerKeys.PASSWORD}
+          value={values[ServerKeys.PASSWORD]}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched[ServerKeys.PASSWORD]}
+          errorMessage={errors[ServerKeys.PASSWORD]}
           placeholder="Password"
         />
         <SecretInput
-          name="confirmPassword"
-          touched
+          name={ServerKeys.CONFIRM_PASSWORD}
+          value={values[ServerKeys.CONFIRM_PASSWORD]}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          touched={touched[ServerKeys.CONFIRM_PASSWORD]}
+          errorMessage={errors[ServerKeys.CONFIRM_PASSWORD]}
           placeholder="Confirm Password"
         />
       </div>
-
-      {/* <div className="flex items-center justify-between text-sm">
-        <Checkbox label="I agree to the terms and conditions" required />
-      </div> */}
 
       <Button type="submit" className="w-full">
         Register
@@ -51,7 +73,7 @@ export default function RegisterPage() {
 
       <p className="text-center text-sm text-gray-600 dark:text-gray-400">
         Already have an account?{' '}
-        <Link to="/auth/login" className="text-blue-600 hover:underline dark:text-blue-400">
+        <Link to={SitePaths.AUTH_LOGIN} className="text-blue-600 hover:underline dark:text-blue-400">
           Login
         </Link>
       </p>

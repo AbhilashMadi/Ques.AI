@@ -3,6 +3,7 @@ import { useForm } from '@hooks/use-form';
 import { loginFormValidationSchema, type LoginFormInput } from '@schemas/login-form-schema';
 import { Link } from 'react-router-dom';
 import ServerKeys from '@resources/server-keys';
+import { SitePaths } from '@configs/site-config';
 
 export default function LoginPage() {
   const {
@@ -55,7 +56,7 @@ export default function LoginPage() {
         onChange={handleChange}
         checked={values[ServerKeys.REMEMBER]}
       />
-      <Link to="/auth/forgot-password" className="text-blue-600 dark:text-blue-400 hover:underline">
+      <Link to={SitePaths.AUTH_FORGOT_PASSWORD} className="text-blue-600 dark:text-blue-400 hover:underline">
         Forgot Password?
       </Link>
     </div>
@@ -66,7 +67,7 @@ export default function LoginPage() {
 
     <p className="text-center text-sm text-gray-600 dark:text-gray-400">
       Don’t have an account?{' '}
-      <Link to="/auth/register" className="text-blue-600 hover:underline dark:text-blue-400">
+      <Link to={SitePaths.AUTH_REGISTER} className="text-blue-600 hover:underline dark:text-blue-400">
         Register
       </Link>
     </p>

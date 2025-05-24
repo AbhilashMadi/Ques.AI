@@ -4,6 +4,7 @@ const ServerKeys = {
   PASSWORD: 'password',
   CONFIRM_PASSWORD: 'confirmPassword',
   REMEMBER: 'remember',
+  FULL_NAME: 'fullName',
   PROJECT_NAME: 'projectName',
 } as const;
 

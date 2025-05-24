@@ -30,9 +30,6 @@
       "@pages/*": [
         "./src/pages/*"
       ],
-      "@assets/*": [
-        "./src/assets/*"
-      ],
       "@configs/*": [
         "./src/configs/*"
       ],
@@ -40,7 +37,10 @@
         "./src/components/custom/index.ts",
       ],
       "@icons": [
-        "./src/components/icons.tsx"
+        "./src/components/icons.tsx",
+      ],
+      "@assets": [
+        "./src/assets/index.ts",
       ]
     }
   }

@@ -11,7 +11,7 @@ const ThemeSwitch: FC = () => {
   return (<Button
     size="icon"
     onClick={() => setTheme(isDark ? 'light' : 'dark')}>
-    {isDark ? <Sun /> : <Moon />}
+    {isDark ? <Sun height={18} width={18} /> : <Moon height={18} width={18} />}
   </Button>)
 }
 

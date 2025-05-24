@@ -8,7 +8,7 @@ const ContextProvider = lazy(() => import('@context/provider'));
 
 // Layouts
 const PublicLayout = lazy(() => import('@components/layouts/public-layout'));
-const LoginLayout = lazy(() => import('@components/layouts/login-layout'));
+const AuthLayout = lazy(() => import('@components/layouts/auth-layout'));
 const PrivateLayout = lazy(() => import('@components/layouts/private-layout'));
 
 // Public Pages
@@ -30,7 +30,7 @@ function App() {
 
           {/* Public Layout */}
           <Route element={<PublicLayout />}>
-            <Route path={SitePaths.AUTH} element={<LoginLayout />}>
+            <Route path={SitePaths.AUTH} element={<AuthLayout />}>
               <Route path={SitePaths.AUTH_LOGIN.replace(`${SitePaths.AUTH}/`, '')} element={<LoginPage />} />
               <Route path={SitePaths.AUTH_REGISTER.replace(`${SitePaths.AUTH}/`, '')} element={<RegisterPage />} />
               <Route path={SitePaths.AUTH_OTP.replace(`${SitePaths.AUTH}/`, '')} element={<OtpPage />} />

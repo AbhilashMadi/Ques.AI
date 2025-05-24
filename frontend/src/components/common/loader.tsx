@@ -1,9 +1,9 @@
 import { type FC } from 'react';
-import spinnerSrc from '@assets/tube-spinner.svg';
+import { tubeSpinner } from '@assets';
 
 const Loader: FC = () => {
   return (<main className="min-h-screen flex-center">
-    <img src={spinnerSrc}
+    <img src={tubeSpinner}
       height={50}
       width={50}
       loading="lazy"

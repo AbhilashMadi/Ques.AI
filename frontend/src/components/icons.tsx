@@ -1,6 +1,8 @@
 import type { FC, SVGProps } from 'react';
 
-export const EyeIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+type IIonsProps = FC<SVGProps<SVGSVGElement>>;
+
+export const EyeIcon: IIonsProps = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,7 +14,6 @@ export const EyeIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-eye-icon"
       {...props}
     >
       <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
@@ -21,7 +22,7 @@ export const EyeIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const EyeCloseIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const EyeCloseIcon: IIonsProps = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +34,6 @@ export const EyeCloseIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-eye-closed-icon"
       {...props}
     >
       <path d="m15 18-.722-3.25" />
@@ -45,7 +45,7 @@ export const EyeCloseIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export const Sun: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const Sun: IIonsProps = (props) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg"
       width="24" height="24"
@@ -55,7 +55,6 @@ export const Sun: FC<SVGProps<SVGSVGElement>> = (props) => {
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      className="lucide lucide-sun-icon lucide-sun"
       {...props}
     >
       <circle cx="12" cy="12" r="4" />
@@ -71,7 +70,7 @@ export const Sun: FC<SVGProps<SVGSVGElement>> = (props) => {
   )
 }
 
-export const Moon: FC<SVGProps<SVGSVGElement>> = (props) => {
+export const Moon: IIonsProps = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -82,9 +81,67 @@ export const Moon: FC<SVGProps<SVGSVGElement>> = (props) => {
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    className="lucide lucide-moon-icon lucide-moon"
     {...props}
   >
     <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
   </svg>)
+}
+
+export const PlusIcon: IIonsProps = (props) => {
+  return (<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    className="lucide lucide-circle-plus-icon lucide-circle-plus"
+    {...props}
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M8 12h8" />
+    <path d="M12 8v8" />
+  </svg>
+  )
+}
+
+export const GearIcon: IIonsProps = (props) => {
+  return (<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    {...props}
+  >
+    <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" />
+  </svg>
+  )
+}
+
+export const BellIcon: IIonsProps = (props) => {
+  return (<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    className="lucide lucide-bell-icon lucide-bell"
+    {...props}
+  >
+    <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+    <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+  </svg>
+  )
 }

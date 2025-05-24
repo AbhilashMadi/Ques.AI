@@ -1,7 +1,5 @@
-import logoImg from '@assets/images/login-logo.svg';
-import siderBgImg from '@assets/images/login-sider-bg.svg';
-import siderLogo from '@assets/images/login-sider-logo.svg';
 import { Outlet } from 'react-router-dom';
+import { logoImg, siderBgImg, siderLogoImg } from '@assets';
 
 export default function LoginLayout() {
   // const { theme, setTheme } = useTheme();
@@ -25,7 +23,7 @@ export default function LoginLayout() {
         <div className="space-y-12 absolute z-10">
           {/* Logo */}
           <img
-            src={siderLogo}
+            src={siderLogoImg}
             height={60}
             width={250}
             alt="Ques.AI Logo"

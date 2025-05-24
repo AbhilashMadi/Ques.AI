@@ -15,6 +15,8 @@ const LoginPage = lazy(() => import('@pages/login-page'));
 const RegisterPage = lazy(() => import('@pages/register-page'));
 const NotFoundPage = lazy(() => import('@pages/not-found-page'));
 const OtpPage = lazy(() => import('@pages/otp-page'));
+const ForgotPasswordPage = lazy(() => import('@pages/forgot-password-page'));
+const ResetPassword = lazy(() => import('@pages/reset-password'));
 
 // Private Pages
 const Dashboard = lazy(() => import('@pages/dashboard'));
@@ -30,6 +32,8 @@ function App() {
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               <Route path="otp" element={<OtpPage />} />
+              <Route path="forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="reset-password" element={<ResetPassword />} />
             </Route>
           </Route>
 

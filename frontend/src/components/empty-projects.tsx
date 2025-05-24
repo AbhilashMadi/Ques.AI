@@ -5,10 +5,10 @@ import { Button } from '@custom';
 import { PlusIcon } from '@icons';
 
 interface IEmptyProjectsProps {
-  onPress: () => void;
+  onCreateProjectPress: () => void;
 }
 
-const EmptyProjects: FC<IEmptyProjectsProps> = ({ onPress }) => {
+const EmptyProjects: FC<IEmptyProjectsProps> = ({ onCreateProjectPress }) => {
   return (<section className="flex-center h-[calc(100dvh-8rem)]">
     <div className="max-w-3xl text-center space-y-10">
       <h1 className="text-h1 text-primary">Create a New Project</h1>
@@ -24,7 +24,7 @@ const EmptyProjects: FC<IEmptyProjectsProps> = ({ onPress }) => {
         Ques.AI is an intuitive web application that streamlines podcast project management, upload workflows, and AI-powered transcription editing. Designed with usability in mind, it empowers podcasters to efficiently manage their content pipeline from creation to transcription.
       </p>
       <Button
-        onClick={onPress}
+        onClick={onCreateProjectPress}
         className="bg-foreground">
         <PlusIcon height={18} />{' '}Create New Project
       </Button>

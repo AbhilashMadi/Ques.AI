@@ -6,6 +6,7 @@ const ServerKeys = {
   REMEMBER: 'remember',
   FULL_NAME: 'fullName',
   PROJECT_NAME: 'projectName',
+  PROJECT_ID: 'projectId',
 } as const;
 
 type ServerKeys = typeof ServerKeys[keyof typeof ServerKeys];

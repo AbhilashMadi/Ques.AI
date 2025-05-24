@@ -6,6 +6,7 @@ import CreateProjectForm from '@components/create-project-form';
 import { useForm } from '@hooks/use-form';
 import { createProjectValidationSchema, type CreateProjectInput } from '@schemas/create-project-schema';
 import ServerKeys from '@resources/server-keys';
+import ProjectsList from '@components/projects-list';
 
 export default function ProjectsPage() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -29,7 +30,11 @@ export default function ProjectsPage() {
       children={<CreateProjectForm form={form} />} />
     <main className="min-h-screen flex flex-col">
       <ProjectsPageHeader />
-      <EmptyProjects onPress={toggleModal} />
+      {
+        [1].length === 0
+          ? <EmptyProjects onCreateProjectPress={toggleModal} />
+          : <ProjectsList />
+      }
     </main>
   </>
   );

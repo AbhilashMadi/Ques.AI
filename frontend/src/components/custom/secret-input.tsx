@@ -1,74 +1,65 @@
-import { useId, useState, type FC, type InputHTMLAttributes } from 'react';
+import { type FC, type InputHTMLAttributes, useId, useState } from 'react';
 import { cn } from '@lib/utils';
 import { Label } from '@custom';
-import { EyeIcon, EyeCloseIcon } from '@icons'
+import { EyeIcon, EyeCloseIcon } from '@icons';
 import { inputVariantStyles } from '@components/custom/input';
+
+const inputSizeStyles = {
+  sm: 'py-1.5 px-2.5 text-sm rounded-sm',
+  md: 'py-2 px-3 text-base rounded-md',
+  lg: 'py-3 px-4 text-lg rounded-lg',
+};
 
 interface SecretInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   touched?: boolean;
-  isValid?: boolean;
-  className?: string;
   errorMessage?: string;
-  required?: boolean;
-  id?: string;
-  variant?: 'default' | 'outline' | 'ghost';
-  inputSize?: 'sm' | 'md' | 'lg';
+  className?: string;
+  variant?: keyof typeof inputVariantStyles;
+  inputSize?: keyof typeof inputSizeStyles;
 }
 
 const SecretInput: FC<SecretInputProps> = ({
   label,
-  touched = false,
-  isValid = true,
-  className,
+  touched,
   errorMessage,
-  required = false,
-  id,
+  className,
+  disabled,
   variant = 'default',
   inputSize = 'md',
-  disabled,
-  ...restProps
+  ...props
 }) => {
-  const uId = `secret-input-${useId()}`;
+  const autoId = useId();
+  const id = props.id ?? `secret-input-${autoId}`;
+  const isError = Boolean(touched && errorMessage);
   const [visible, setVisible] = useState(false);
 
-  const toggleVisibility = () => setVisible((prev) => !prev);
-
-  const sizeStyles = {
-    sm: 'py-1.5 px-2.5 text-sm rounded-sm',
-    md: 'py-2 px-3 text-base rounded-md',
-    lg: 'py-3 px-4 text-lg rounded-lg',
-  };
-
-  const stateStyles = cn(
-    !isValid && touched && 'border-destructive focus:border-destructive focus:ring-destructive/50',
-    disabled && 'opacity-50 cursor-not-allowed'
-  );
+  const toggleVisibility = () => setVisible(prev => !prev);
 
   return (
-    <div className="grid w-full items-center gap-1.5 relative">
-      <Label
-        htmlFor={id ?? uId}
-        required={required}
-        className={cn(
-          !isValid && touched && 'text-destructive',
-          disabled && 'opacity-50'
-        )}
-        children={label}
-      />
+    <div className="grid w-full items-center gap-1.5">
+      {label && (
+        <Label
+          htmlFor={id}
+          className={cn(isError && 'text-destructive', disabled && 'opacity-50')}
+        >
+          {label}
+        </Label>
+      )}
       <div className="relative">
         <input
-          id={id ?? uId}
+          id={id}
           type={visible ? 'text' : 'password'}
           disabled={disabled}
-          {...restProps}
+          required={false}
+          {...props}
           className={cn(
-            'w-full pr-10 transition-colors',
-            'focus:outline-none focus:shadow-sm',
+            'w-full pr-10 transition-colors focus:outline-none focus:shadow-sm',
             'file:border-0 file:bg-transparent file:text-sm file:font-medium',
             inputVariantStyles[variant],
-            sizeStyles[inputSize],
-            stateStyles,
+            inputSizeStyles[inputSize],
+            isError && 'border-destructive focus:border-destructive focus:ring-destructive/50',
+            disabled && 'opacity-50 cursor-not-allowed',
             className
           )}
         />
@@ -76,15 +67,12 @@ const SecretInput: FC<SecretInputProps> = ({
           type="button"
           onClick={toggleVisibility}
           tabIndex={-1}
-          className="absolute right-3 cursor-pointer top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
         >
           {visible ? <EyeCloseIcon height={18} /> : <EyeIcon height={18} />}
         </button>
       </div>
-
-      {!isValid && touched && errorMessage && (
-        <p className="text-sm text-destructive mt-1">{errorMessage}</p>
-      )}
+      {isError && <p className="text-sm text-destructive mt-1">{errorMessage}</p>}
     </div>
   );
 };

@@ -18,7 +18,6 @@ export default function ForgotPasswordPage() {
       <Input
         name="email"
         type="email"
-        isValid
         touched
         placeholder="Email address"
       />

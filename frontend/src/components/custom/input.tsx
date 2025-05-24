@@ -4,7 +4,7 @@ import { Label } from '@custom';
 
 export const inputVariantStyles = {
   default: cn(
-    'bg-background border border-input bg-white',
+    'bg-white border border-input',
     'focus:ring-2 focus:ring-ring focus:border-primary',
     'placeholder:text-muted-foreground'
   ),
@@ -20,75 +20,61 @@ export const inputVariantStyles = {
   ),
 };
 
+const inputSizeStyles = {
+  sm: 'py-1.5 px-2.5 text-sm rounded-sm',
+  md: 'py-2 px-3 text-base rounded-md',
+  lg: 'py-3 px-4 text-lg rounded-lg',
+};
+
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   touched?: boolean;
-  isValid?: boolean;
-  className?: string;
   errorMessage?: string;
-  required?: boolean;
-  id?: string;
-  variant?: 'default' | 'outline' | 'ghost';
-  inputSize?: 'sm' | 'md' | 'lg';
+  className?: string;
+  variant?: keyof typeof inputVariantStyles;
+  inputSize?: keyof typeof inputSizeStyles;
 }
 
 const Input: FC<InputProps> = ({
   label,
-  touched = false,
-  isValid = true,
-  className,
+  touched,
   errorMessage,
-  required = false,
-  id,
+  className,
+  disabled,
   variant = 'default',
   inputSize = 'md',
-  disabled,
-  ...restProps
+  ...props
 }) => {
-  const uId = `input-${useId()}`;
-
-  // Size styles
-  const sizeStyles = {
-    sm: 'py-1.5 px-2.5 text-sm rounded-sm',
-    md: 'py-2 px-3 text-base rounded-md',
-    lg: 'py-3 px-4 text-lg rounded-lg',
-  };
-
-  // State styles
-  const stateStyles = cn(
-    !isValid && touched && 'border-destructive focus:border-destructive focus:ring-destructive/50',
-    disabled && 'opacity-50 cursor-not-allowed'
-  );
+  const autoId = useId();
+  const isError = Boolean(touched && errorMessage);
+  const id = props.id ?? `input-${autoId}`;
 
   return (
     <div className="grid w-full items-center gap-1.5">
-      <Label
-        htmlFor={id ?? uId}
-        required={required}
-        className={cn(
-          !isValid && touched && 'text-destructive',
-          disabled && 'opacity-50'
-        )}
-        children={label}
-      />
+      {label && (
+        <Label
+          htmlFor={id}
+          className={cn(isError && 'text-destructive', disabled && 'opacity-50')}
+        >
+          {label}
+        </Label>
+      )}
       <input
-        id={id ?? uId}
+        id={id}
         disabled={disabled}
-        {...restProps}
+        {...props}
+        required={false}
         className={cn(
-          'w-full transition-colors',
-          'focus:outline-none focus:shadow-sm',
+          'w-full transition-colors focus:outline-none focus:shadow-sm',
           'file:border-0 file:bg-transparent file:text-sm file:font-medium',
           inputVariantStyles[variant],
-          sizeStyles[inputSize],
-          stateStyles,
+          inputSizeStyles[inputSize],
+          isError && 'border-destructive focus:border-destructive focus:ring-destructive/50',
+          disabled && 'opacity-50 cursor-not-allowed',
           className
         )}
       />
-
-      {!isValid && touched && errorMessage && (
-        <p className="text-sm text-destructive mt-1">{errorMessage}</p>
-      )}
+      {isError && <p className="text-sm text-destructive mt-1">{errorMessage}</p>}
     </div>
   );
 };

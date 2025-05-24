@@ -41,6 +41,12 @@
       ],
       "@assets": [
         "./src/assets/index.ts",
+      ],
+      "@schemas/*": [
+        "./src/schemas/*",
+      ],
+      "@resources/*": [
+        "./src/resources/*"
       ]
     }
   }

@@ -16,30 +16,26 @@ export default function RegisterPage() {
       onReset={handleReset}
       className="space-y-5"
     >
-      <div className="">
+      <div className="space-y-1.5">
         <Input
           name="name"
           type="text"
-          isValid
           touched
           placeholder="Full Name"
         />
         <Input
           name="email"
           type="email"
-          isValid
           touched
           placeholder="Email Address"
         />
         <SecretInput
           name="password"
-          isValid
           touched
           placeholder="Password"
         />
         <SecretInput
           name="confirmPassword"
-          isValid
           touched
           placeholder="Confirm Password"
         />

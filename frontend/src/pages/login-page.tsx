@@ -14,17 +14,15 @@ export default function LoginPage() {
     onSubmit={handleSubmit}
     onReset={handleReset}
     className="space-y-5">
-    <div>
+    <div className="space-y-1.5">
       <Input
         name="email"
         type="email"
-        isValid
         touched
         placeholder="Email Address"
       />
       <SecretInput
         name="password"
-        isValid
         touched
         placeholder="Password"
       />

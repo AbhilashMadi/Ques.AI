@@ -32,6 +32,9 @@
       ],
       "@assets/*": [
         "./src/assets/*"
+      ],
+      "@configs/*": [
+        "./src/configs/*"
       ]
     }
   }

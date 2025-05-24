@@ -5,9 +5,9 @@ export default function LoginLayout() {
   // const { theme, setTheme } = useTheme();
 
   return (
-    <main className="grid grid-cols-1 md:grid-cols-3 min-h-screen">
+    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-h-screen">
       {/* Sider Section */}
-      <section className="col-span-2 bg-gradient-to-tl to-[#3A0B63] from-[#C37EFF] hidden md:flex relative overflow-hidden p-16">
+      <section className="md:col-span-1 lg:col-span-2 bg-gradient-to-tl to-[#3A0B63] from-[#C37EFF] hidden md:flex relative overflow-hidden p-16">
         {/* Background image */}
         <img
           src={siderBgImg}

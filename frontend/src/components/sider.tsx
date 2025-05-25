@@ -1,3 +1,4 @@
+import { SitePaths } from '@/configs/site-config';
 import useSessionStorage from '@/hooks/use-session-storage';
 import { cn } from '@/lib/utils';
 import StorageKeys from '@/resources/storage-keys';
@@ -26,6 +27,7 @@ import {
   useCallback,
   type FC
 } from 'react';
+import { Link } from 'react-router-dom';
 
 const Sider: FC = () => {
   const [collapse, setCollapse] = useSessionStorage(StorageKeys.COLLSPED, false);
@@ -44,7 +46,7 @@ const Sider: FC = () => {
       )}
     >
       {/* Logo */}
-      <div className="flex items-center pl-2">
+      <Link to={SitePaths.PROJECTS} className="flex items-center pl-2">
         <img
           src={collapse ? logoSymbolImg : logoPrimaryImg}
           alt="Logo"
@@ -54,7 +56,7 @@ const Sider: FC = () => {
           loading="lazy"
           decoding="async"
         />
-      </div>
+      </Link>
 
       {/* Content */}
       <div className={cn('flex-1 divide-y divide-border [&>div]:py-4 flex justify-between flex-col', !collapse && 'overflow-hidden')}>

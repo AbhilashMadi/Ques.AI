@@ -7,6 +7,9 @@ const ServerKeys = {
   FULL_NAME: 'fullName',
   PROJECT_NAME: 'projectName',
   PROJECT_ID: 'projectId',
+  TRANSCRIPT_NAME: 'transcriptName',
+  TRANSCRIPT: 'transcript',
+  TRNASCRIPT_CATEGORY: 'transcriptCategory'
 } as const;
 
 type ServerKeys = typeof ServerKeys[keyof typeof ServerKeys];

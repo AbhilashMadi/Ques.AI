@@ -10,14 +10,7 @@ export const SitePaths = {
   /* PRIVATE ROUTES */
   PROJECTS: '/projects',
   PROJECT_DASHBOARD: (projectId: string = ':projectId') => `/projects/${projectId}`,
-
-  /* UPLOAD FLOW */
-  ADD_PODCAST: (projectId: string) => `/projects/${projectId}/add-podcast`,
-  UPLOAD_FROM_YOUTUBE: (projectId: string) => `/projects/${projectId}/add-podcast/youtube`,
-  UPLOAD_FILE: (projectId: string) => `/projects/${projectId}/add-podcast/upload`,
-
-  /* TRANSCRIPT FLOW */
-  EDIT_TRANSCRIPT: (projectId: string, fileId: string) => `/projects/${projectId}/transcript/${fileId}`,
+  EDIT_TRANSCRIPT: '/projects/:projectId/edit-transcript',
 };
 
 export const SiteConfig = {

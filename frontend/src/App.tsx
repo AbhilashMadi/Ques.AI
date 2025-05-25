@@ -23,6 +23,7 @@ const ResetPassword = lazy(() => import('@pages/reset-password'));
 // Private Pages
 const ProjectsPage = lazy(() => import('@pages/projects-page'));
 const AddPodcastPage = lazy(() => import('@pages/add-podcast-page'));
+const EditTranscriptPage = lazy(() => import('@pages/edit-transcript-page'));
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route path={SitePaths.PROJECTS.replace('/', '')} element={<ProjectsPage />} />
             <Route path={SitePaths.PROJECT_DASHBOARD()} element={<ProjectDashboardLayout />}>
               <Route index element={<AddPodcastPage />} />
+              <Route path={SitePaths.EDIT_TRANSCRIPT} element={<EditTranscriptPage />} />
             </Route>
           </Route>
 

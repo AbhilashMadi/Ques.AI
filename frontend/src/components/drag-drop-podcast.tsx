@@ -4,7 +4,7 @@ import { Button } from '@custom';
 
 const DragDropPodcast: FC = () => {
   return (
-    <section className="col-span-3 p-4 bg-card rounded">
+    <section className="col-span-3 p-4 bg-card rounded cursor-grab">
       <div className="flex flex-col items-center justify-center gap-4 py-12 px-6 border border-dashed rounded-md border-muted">
         <img
           src={uploadIconImg}

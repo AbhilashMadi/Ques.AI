@@ -2,13 +2,7 @@ import { type FC, type InputHTMLAttributes, useId, useState } from 'react';
 import { cn } from '@lib/utils';
 import { Label } from '@custom';
 import { EyeIcon, EyeCloseIcon } from '@icons';
-import { inputVariantStyles } from '@components/custom/input';
-
-const inputSizeStyles = {
-  sm: 'py-1.5 px-2.5 text-sm rounded-sm',
-  md: 'py-2 px-3 text-base rounded-md',
-  lg: 'py-3 px-4 text-lg rounded-lg',
-};
+import { inputVariantStyles, inputSizeStyles } from '@components/custom/input';
 
 interface SecretInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;

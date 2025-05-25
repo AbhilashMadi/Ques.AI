@@ -20,7 +20,7 @@ export const inputVariantStyles = {
   ),
 };
 
-const inputSizeStyles = {
+export const inputSizeStyles = {
   sm: 'py-1.5 px-2.5 text-sm rounded-sm',
   md: 'py-2 px-3 text-base rounded-md',
   lg: 'py-3 px-4 text-lg rounded-lg',
@@ -43,6 +43,7 @@ const Input: FC<InputProps> = ({
   disabled,
   variant = 'default',
   inputSize = 'md',
+  required,
   ...props
 }) => {
   const autoId = useId();
@@ -55,6 +56,7 @@ const Input: FC<InputProps> = ({
         <Label
           htmlFor={id}
           className={cn(isError && 'text-destructive', disabled && 'opacity-50')}
+          required={required}
         >
           {label}
         </Label>

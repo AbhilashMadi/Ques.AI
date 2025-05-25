@@ -1,7 +1,8 @@
+import TranscriptsList from '@/components/transcripts-list';
 import { rssImg, uploadImg, youtubeImg } from '@assets';
 import AddYoutubeTranscriptForm from '@components/add-youtube-transcript-form';
 import ChooseTranscriptTypeCard from '@components/choose-transcript-type-card';
-import DragDropPodcast from '@components/drag-drop-podcast';
+import DragDropPodcast from '@componentsdrag-drop-podcast';
 import { Modal } from '@custom';
 import { useCallback, useState } from 'react';
 
@@ -45,7 +46,8 @@ export default function AddPodcastPage() {
           description="Upload audio, video, or transcript files directly from your device to create a podcast."
         />
         {/* DragDropPodcast */}
-        <DragDropPodcast />
+        {/* <DragDropPodcast /> */}
+        <TranscriptsList />
       </div>
     </section>
   </>);

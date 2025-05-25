@@ -11,6 +11,7 @@ export const SitePaths = {
   PROJECTS: '/projects',
   PROJECT_DASHBOARD: (projectId: string = ':projectId') => `/projects/${projectId}`,
   EDIT_TRANSCRIPT: '/projects/:projectId/edit-transcript',
+  USER_PROFILE: '/projects/user-profile',
 };
 
 export const SiteConfig = {

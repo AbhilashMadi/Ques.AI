@@ -9,7 +9,7 @@ export const SitePaths = {
 
   /* PRIVATE ROUTES */
   PROJECTS: '/projects',
-  PROJECT_DETAILS: (projectId: string) => `/projects/${projectId}`,
+  PROJECT_DASHBOARD: (projectId: string = ':projectId') => `/projects/${projectId}`,
 
   /* UPLOAD FLOW */
   ADD_PODCAST: (projectId: string) => `/projects/${projectId}/add-podcast`,

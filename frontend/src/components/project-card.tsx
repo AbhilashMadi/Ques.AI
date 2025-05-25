@@ -27,7 +27,7 @@ const ProjectCard: FC<IProjectCard> = memo(({ project }) => {
   const avatarBg = useMemo(() => avatarColors[Math.floor(Math.random() * avatarColors.length)],
     [project[ServerKeys.PROJECT_ID]]);
 
-  return (<Link to={SitePaths.PROJECT_DETAILS(project.projectId)}>
+  return (<Link to={SitePaths.PROJECT_DASHBOARD(project.projectId)}>
     <li
       className="border border-card-foreground/30 p-2 rounded bg-card flex gap-4 items-center max-w-md hover:shadow-md hover:scale-105 transition-all"
       role="button">

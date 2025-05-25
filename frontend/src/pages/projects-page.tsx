@@ -10,6 +10,7 @@ import ProjectsList from '@components/projects-list';
 
 export default function ProjectsPage() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   const form = useForm<CreateProjectInput>({
     initialValues: {
       [ServerKeys.PROJECT_NAME]: ''
@@ -33,7 +34,7 @@ export default function ProjectsPage() {
       {
         [1].length === 0
           ? <EmptyProjects onCreateProjectPress={toggleModal} />
-          : <ProjectsList />
+          : <ProjectsList onCreateProjectPress={toggleModal} />
       }
     </main>
   </>

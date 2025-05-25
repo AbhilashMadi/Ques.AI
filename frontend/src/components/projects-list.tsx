@@ -2,7 +2,7 @@ import { type FC } from 'react';
 import { type Project } from '@components/project-card';
 import ProjectCard from '@components/project-card';
 import { Button } from '@custom';
-import { PlusIcon } from '@icons';
+import { PlusCircleIcon } from '@icons';
 
 const projects: Project[] = [
   {
@@ -26,7 +26,7 @@ const ProjectsList: FC<IProjectsListProps> = ({ onCreateProjectPress }) => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h3 className="text-2xl sm:text-3xl font-semibold text-primary">Projects</h3>
         <Button className="bg-foreground self-start sm:self-auto" onClick={onCreateProjectPress}>
-          <PlusIcon height={18} />
+          <PlusCircleIcon height={18} />
           Create New Project
         </Button>
       </div>

@@ -1,0 +1,251 @@
+@layer utilities {
+  /* Base sizes */
+  .avatar {
+    @apply w-[100px] h-[100px] bg-[url("/src/assets/sprits/avatars-sheet.png")] bg-[length:700px_500px];
+  }
+
+  .avatar-sm {
+    @apply w-[50px] h-[50px] bg-[url("/src/assets/sprits/avatars-sheet.png")] bg-[length:350px_250px];
+  }
+
+  .avatar-xs {
+    @apply w-[30px] h-[30px] bg-[url("/src/assets/sprits/avatars-sheet.png")] bg-[length:210px_150px];
+  }
+
+  /* Avatar background positions (100px size) */
+  .avatar-1 {
+    @apply bg-[-0px_-0px];
+  }
+  .avatar-2 {
+    @apply bg-[-100px_-0px];
+  }
+  .avatar-3 {
+    @apply bg-[-200px_-0px];
+  }
+  .avatar-4 {
+    @apply bg-[-300px_-0px];
+  }
+  .avatar-5 {
+    @apply bg-[-400px_-0px];
+  }
+  .avatar-6 {
+    @apply bg-[-500px_-0px];
+  }
+  .avatar-7 {
+    @apply bg-[-600px_-0px];
+  }
+  .avatar-8 {
+    @apply bg-[-0px_-100px];
+  }
+  .avatar-9 {
+    @apply bg-[-100px_-100px];
+  }
+  .avatar-10 {
+    @apply bg-[-200px_-100px];
+  }
+  .avatar-11 {
+    @apply bg-[-300px_-100px];
+  }
+  .avatar-12 {
+    @apply bg-[-400px_-100px];
+  }
+  .avatar-13 {
+    @apply bg-[-500px_-100px];
+  }
+  .avatar-14 {
+    @apply bg-[-600px_-100px];
+  }
+  .avatar-15 {
+    @apply bg-[-0px_-200px];
+  }
+  .avatar-16 {
+    @apply bg-[-100px_-200px];
+  }
+  .avatar-17 {
+    @apply bg-[-200px_-200px];
+  }
+  .avatar-18 {
+    @apply bg-[-300px_-200px];
+  }
+  .avatar-19 {
+    @apply bg-[-400px_-200px];
+  }
+  .avatar-20 {
+    @apply bg-[-500px_-200px];
+  }
+  .avatar-21 {
+    @apply bg-[-600px_-200px];
+  }
+  .avatar-22 {
+    @apply bg-[-0px_-300px];
+  }
+  .avatar-23 {
+    @apply bg-[-100px_-300px];
+  }
+  .avatar-24 {
+    @apply bg-[-200px_-300px];
+  }
+  .avatar-25 {
+    @apply bg-[-300px_-300px];
+  }
+  .avatar-26 {
+    @apply bg-[-400px_-300px];
+  }
+  .avatar-27 {
+    @apply bg-[-500px_-300px];
+  }
+  .avatar-28 {
+    @apply bg-[-600px_-300px];
+  }
+  .avatar-29 {
+    @apply bg-[-0px_-400px];
+  }
+  .avatar-30 {
+    @apply bg-[-100px_-400px];
+  }
+  .avatar-31 {
+    @apply bg-[-200px_-400px];
+  }
+  .avatar-32 {
+    @apply bg-[-300px_-400px];
+  }
+  .avatar-33 {
+    @apply bg-[-400px_-400px];
+  }
+  .avatar-34 {
+    @apply bg-[-500px_-400px];
+  }
+  .avatar-35 {
+    @apply bg-[-600px_-400px];
+  }
+
+  /* Small avatars background positions (50px size) */
+  .avatar-sm-1 {
+    @apply bg-[-0px_-0px];
+  }
+  .avatar-sm-2 {
+    @apply bg-[-50px_-0px];
+  }
+  .avatar-sm-3 {
+    @apply bg-[-100px_-0px];
+  }
+  .avatar-sm-4 {
+    @apply bg-[-150px_-0px];
+  }
+  .avatar-sm-5 {
+    @apply bg-[-200px_-0px];
+  }
+  .avatar-sm-6 {
+    @apply bg-[-250px_-0px];
+  }
+  .avatar-sm-7 {
+    @apply bg-[-300px_-0px];
+  }
+  .avatar-sm-8 {
+    @apply bg-[-0px_-50px];
+  }
+  .avatar-sm-9 {
+    @apply bg-[-50px_-50px];
+  }
+  .avatar-sm-10 {
+    @apply bg-[-100px_-50px];
+  }
+  .avatar-sm-11 {
+    @apply bg-[-150px_-50px];
+  }
+  .avatar-sm-12 {
+    @apply bg-[-200px_-50px];
+  }
+  .avatar-sm-13 {
+    @apply bg-[-250px_-50px];
+  }
+  .avatar-sm-14 {
+    @apply bg-[-300px_-50px];
+  }
+  .avatar-sm-15 {
+    @apply bg-[-0px_-100px];
+  }
+  .avatar-sm-16 {
+    @apply bg-[-50px_-100px];
+  }
+  .avatar-sm-17 {
+    @apply bg-[-100px_-100px];
+  }
+  .avatar-sm-18 {
+    @apply bg-[-150px_-100px];
+  }
+  .avatar-sm-19 {
+    @apply bg-[-200px_-100px];
+  }
+  .avatar-sm-20 {
+    @apply bg-[-250px_-100px];
+  }
+  .avatar-sm-21 {
+    @apply bg-[-300px_-100px];
+  }
+
+  /* Extra small avatars background positions (30px size) */
+  .avatar-xs-1 {
+    @apply bg-[-0px_-0px];
+  }
+  .avatar-xs-2 {
+    @apply bg-[-30px_-0px];
+  }
+  .avatar-xs-3 {
+    @apply bg-[-60px_-0px];
+  }
+  .avatar-xs-4 {
+    @apply bg-[-90px_-0px];
+  }
+  .avatar-xs-5 {
+    @apply bg-[-120px_-0px];
+  }
+  .avatar-xs-6 {
+    @apply bg-[-150px_-0px];
+  }
+  .avatar-xs-7 {
+    @apply bg-[-180px_-0px];
+  }
+  .avatar-xs-8 {
+    @apply bg-[-0px_-30px];
+  }
+  .avatar-xs-9 {
+    @apply bg-[-30px_-30px];
+  }
+  .avatar-xs-10 {
+    @apply bg-[-60px_-30px];
+  }
+  .avatar-xs-11 {
+    @apply bg-[-90px_-30px];
+  }
+  .avatar-xs-12 {
+    @apply bg-[-120px_-30px];
+  }
+  .avatar-xs-13 {
+    @apply bg-[-150px_-30px];
+  }
+  .avatar-xs-14 {
+    @apply bg-[-180px_-30px];
+  }
+  .avatar-xs-15 {
+    @apply bg-[-0px_-60px];
+  }
+  .avatar-xs-16 {
+    @apply bg-[-30px_-60px];
+  }
+  .avatar-xs-17 {
+    @apply bg-[-60px_-60px];
+  }
+  .avatar-xs-18 {
+    @apply bg-[-90px_-60px];
+  }
+  .avatar-xs-19 {
+    @apply bg-[-120px_-60px];
+  }
+  .avatar-xs-20 {
+    @apply bg-[-150px_-60px];
+  }
+  .avatar-xs-21 {
+    @apply bg-[-180px_-60px];
+  }
+}

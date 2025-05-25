@@ -2,7 +2,7 @@ import { type FC } from 'react';
 import { emptyProjectImg } from '@assets';
 import { SiteConfig } from '@configs/site-config';
 import { Button } from '@custom';
-import { PlusIcon } from '@icons';
+import { PlusCircleIcon } from '@icons';
 
 interface IEmptyProjectsProps {
   onCreateProjectPress: () => void;
@@ -31,7 +31,7 @@ const EmptyProjects: FC<IEmptyProjectsProps> = ({ onCreateProjectPress }) => {
         </p>
 
         <Button onClick={onCreateProjectPress} className="bg-foreground flex gap-2 mx-auto">
-          <PlusIcon height={18} />
+          <PlusCircleIcon height={18} />
           Create New Project
         </Button>
       </div>

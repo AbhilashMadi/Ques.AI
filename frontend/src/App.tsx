@@ -10,6 +10,7 @@ const ContextProvider = lazy(() => import('@context/provider'));
 const PublicLayout = lazy(() => import('@components/layouts/public-layout'));
 const AuthLayout = lazy(() => import('@components/layouts/auth-layout'));
 const PrivateLayout = lazy(() => import('@components/layouts/private-layout'));
+const ProjectDashboardLayout = lazy(() => import('@components/layouts/project-dashboard-layout'));
 
 // Public Pages
 const LoginPage = lazy(() => import('@pages/login-page'));
@@ -21,7 +22,6 @@ const ResetPassword = lazy(() => import('@pages/reset-password'));
 
 // Private Pages
 const ProjectsPage = lazy(() => import('@pages/projects-page'));
-const ProjectDashboard = lazy(() => import('@pages/project-dashboard'));
 
 function App() {
   return (
@@ -44,7 +44,7 @@ function App() {
           <Route element={<PrivateLayout />}>
             <Route index element={<Navigate to={SitePaths.PROJECTS} replace />} />
             <Route path={SitePaths.PROJECTS.replace('/', '')} element={<ProjectsPage />} />
-            <Route path={SitePaths.PROJECT_DASHBOARD()} element={<ProjectDashboard />} />
+            <Route path={SitePaths.PROJECT_DASHBOARD()} element={<ProjectDashboardLayout />} />
           </Route>
 
           {/* Fallback Route */}

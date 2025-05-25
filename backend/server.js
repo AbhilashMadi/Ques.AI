@@ -18,8 +18,7 @@ app.register(require('@fastify/rate-limit'), rateLimitConfig);
 
 // Register Custom Plugins
 app.register(require('#plugins/response.plugin'))
-
-// Database connection
+app.register(require('#plugins/mongoose.plugin'))
 
 // Register routes
 

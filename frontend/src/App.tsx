@@ -22,6 +22,7 @@ const ResetPassword = lazy(() => import('@pages/reset-password'));
 
 // Private Pages
 const ProjectsPage = lazy(() => import('@pages/projects-page'));
+const AddPodcastPage = lazy(() => import('@pages/add-podcast-page'));
 
 function App() {
   return (
@@ -44,7 +45,9 @@ function App() {
           <Route element={<PrivateLayout />}>
             <Route index element={<Navigate to={SitePaths.PROJECTS} replace />} />
             <Route path={SitePaths.PROJECTS.replace('/', '')} element={<ProjectsPage />} />
-            <Route path={SitePaths.PROJECT_DASHBOARD()} element={<ProjectDashboardLayout />} />
+            <Route path={SitePaths.PROJECT_DASHBOARD()} element={<ProjectDashboardLayout />}>
+              <Route index element={<AddPodcastPage />} />
+            </Route>
           </Route>
 
           {/* Fallback Route */}

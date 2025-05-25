@@ -97,7 +97,7 @@ const Sider: FC = () => {
       <Button
         onClick={toggleCollapse}
         size="icon"
-        className="rounded-full absolute bottom-1/2 -right-5 bg-primary text-primary-foreground hover:bg-primary/90 shadow"
+        className="rounded-full absolute bottom-1/2 -right-5 bg-primary text-primary-foreground hover:bg-primary/90 shadow-md"
       >
         <ChevronRight
           height={18}

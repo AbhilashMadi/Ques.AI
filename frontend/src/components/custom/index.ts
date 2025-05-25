@@ -9,3 +9,4 @@ export { default as Modal } from './modal.tsx';
 export { default as UserCard } from './user-card.tsx';
 export { default as Tooltip } from './tooltip.tsx';
 export { default as NavItem } from './nav-item.tsx';
+export { default as Breadcrumb } from './bredcrumb.tsx';

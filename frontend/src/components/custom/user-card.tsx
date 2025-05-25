@@ -1,3 +1,4 @@
+import { SitePaths } from '@configs/site-config';
 import '@css/avatar-sprit.css';
 import { type FC } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,7 +8,7 @@ interface IUserCardProps {
 }
 
 const UserCard: FC<IUserCardProps> = ({ collapse }) => {
-  return (<Link to={'#'} className="p-2 rounded">
+  return (<Link to={SitePaths.USER_PROFILE} className="p-2 rounded">
     <section className="flex gap-2">
       <div className="avatar-sm avatar-1 rounded" />
       {!collapse && <div>

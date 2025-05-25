@@ -20,7 +20,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children, title, className }) 
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
-      <div className={cn('relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800', className)}>
+      <div className={cn('relative w-full max-w-md rounded-lg bg-white p-6 shadow-xl dark:bg-secondary', className)}>
         <div className="mb-4 flex items-center justify-between">
           <h4 className="text-xl font-semibold text-gray-900 dark:text-white">
             {title}

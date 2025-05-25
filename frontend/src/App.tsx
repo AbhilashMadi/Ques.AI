@@ -24,6 +24,7 @@ const ResetPassword = lazy(() => import('@pages/reset-password'));
 const ProjectsPage = lazy(() => import('@pages/projects-page'));
 const AddPodcastPage = lazy(() => import('@pages/add-podcast-page'));
 const EditTranscriptPage = lazy(() => import('@pages/edit-transcript-page'));
+const UserProfilePage = lazy(() => import('@pages/user-profile-page'));
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
             <Route path={SitePaths.PROJECT_DASHBOARD()} element={<ProjectDashboardLayout />}>
               <Route index element={<AddPodcastPage />} />
               <Route path={SitePaths.EDIT_TRANSCRIPT} element={<EditTranscriptPage />} />
+              <Route path={SitePaths.USER_PROFILE} element={<UserProfilePage />} />
             </Route>
           </Route>
 

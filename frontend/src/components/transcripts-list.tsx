@@ -40,7 +40,7 @@ const TranscriptsList: FC = () => {
     ], []);
 
   return (
-    <section className="rounded bg-white p-4 col-span-3">
+    <section className="rounded bg-card p-4 col-span-3">
       <h4 className="text-h4 mb-2">Your Files</h4>
       <Table data={data} columns={columns} rowsPerPage={5} />
     </section>

@@ -39,14 +39,14 @@ const Table = <T,>({
   const handleNext = () => setCurrentPage((p) => Math.min(totalPages, p + 1));
 
   return (
-    <div className={cn('bg-white', className)}>
+    <div className={cn('bg-card', className)}>
       <div className="overflow-x-auto">
         <table className="w-full table-auto text-left text-sm">
-          <thead className="bg-gray-100 text-gray-700 rounded">
+          <thead className="bg-muted rounded">
             <tr>
               {showRowNumbers && <th className="px-4 py-2 w-10">No.</th>}
               {columns.map((col, i) => (
-                <th key={i} className={`px-4 py-2 ${col.className || ''}`}>
+                <th key={i} className={`px-4 py-2 text-muted ${col.className || ''}`}>
                   {col.title}
                 </th>
               ))}
@@ -61,7 +61,7 @@ const Table = <T,>({
                   </td>
                 )}
                 {columns.map((col, colIndex) => (
-                  <td key={colIndex} className={`px-4 py-2 ${col.className || ''}`}>
+                  <td key={colIndex} className={`px-4 py-2 text-muted ${col.className || ''}`}>
                     {col.render
                       ? col.render(row, rowIndex, row)
                       : col.dataIndex
@@ -77,7 +77,7 @@ const Table = <T,>({
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-end gap-2 px-4 py-3 text-sm text-gray-600">
+        <div className="flex items-center justify-end gap-2 px-4 py-3 text-sm text-muted">
           <span>
             Page {currentPage} of {totalPages}
           </span>
@@ -90,7 +90,6 @@ const Table = <T,>({
             Prev
           </Button>
           <Button
-            className="rounded border px-2 py-1 hover:bg-gray-100 disabled:opacity-50"
             disabled={currentPage === totalPages}
             onClick={handleNext}
             size="sm"

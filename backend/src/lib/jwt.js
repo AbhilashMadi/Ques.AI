@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const {
   UnauthorizedException,
   HttpException,
+  BadRequestException,
 } = require('#utils/exceptions');
 
 const {
@@ -9,7 +10,9 @@ const {
   REFRESH_TOKEN_EXP,
   ACCESS_TOKEN_SECRET,
   ACCESS_TOKEN_EXP,
-} = require('@configs/env.config');
+  OTP_VERIFY_TOKEN_SECRET,
+  OTP_VERIFY_TOKEN_EXP,
+} = require('#configs/env.config');
 
 /**
  * Generate an access token
@@ -67,9 +70,41 @@ function verifyRefreshToken(token) {
   }
 }
 
+/**
+ * Generate a short-lived OTP cookie token
+ * Used to verify that OTP verification is done from the same client/device
+ * 
+ * @param {Object} payload - Typically { email, otpId }
+ * @param {String} [expiresIn='5m']
+ * @returns {String} JWT token
+ */
+function generateOtpCookieToken(payload, expiresIn = OTP_VERIFY_TOKEN_EXP) {
+  try {
+    return jwt.sign(payload, OTP_VERIFY_TOKEN_SECRET, { algorithm: 'HS256', expiresIn });
+  } catch (err) {
+    throw new HttpException('Failed to generate OTP token');
+  }
+}
+
+/**
+ * Verify OTP cookie token
+ * 
+ * @param {String} token - JWT from cookie
+ * @returns {Object} Decoded payload
+ */
+function verifyOtpCookieToken(token) {
+  try {
+    return jwt.verify(token, OTP_VERIFY_TOKEN_SECRET, { algorithms: ['HS256'] });
+  } catch (err) {
+    throw new BadRequestException('Invalid or expired OTP token');
+  }
+}
+
 module.exports = {
   generateAccessToken,
   generateRefreshToken,
   verifyAccessToken,
   verifyRefreshToken,
+  generateOtpCookieToken,
+  verifyOtpCookieToken
 };

@@ -1,53 +1,52 @@
 const { Schema, model } = require('mongoose');
 const { hashPassword, comparePassword } = require('#lib/bcrypt');
+const { EMAIL_REGEX } = require('#resources/regex-patterns');
 
-const userSchema = new Schema(
-  {
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
-      index: true,
-      match: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        'Please enter a valid email address',
-      ],
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 8,
-      select: false, // hide password from queries
-    },
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    role: {
-      type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
-    },
-    isVerified: {
-      type: Boolean,
-      default: false,
+const userSchema = new Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+    index: true,
+    match: [EMAIL_REGEX, 'Please enter a valid email address'],
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+    select: false,
+  },
+  fullName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+}, {
+  timestamps: true,
+  toJSON: {
+    virtuals: true,
+    transform(_doc, ret) {
+      ret.id = ret._id;
+
+      delete ret.password;
+      delete ret._id;
+      delete ret.__v;
+
+      return ret;
     },
   },
-  {
-    timestamps: true,
-    toJSON: {
-      virtuals: true,
-      transform(_doc, ret) {
-        delete ret.password;
-        delete ret.__v;
-        return ret;
-      },
-    },
-  }
-);
+});
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {

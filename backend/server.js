@@ -8,6 +8,7 @@ const app = Fastify({ logger: require('#configs/logger.config')[envConfig.NODE_E
 // Register plugins
 app.register(require('@fastify/helmet'), require('#configs/helmet.config')[envConfig.NODE_ENV]);
 app.register(require('@fastify/cors'), require('#configs/cors.config.js'));
+app.register(require('@fastify/cookie'), require('#configs/cookie.config'));
 app.register(require('@fastify/rate-limit'), require('#configs/rate-limit.config'));
 
 // Register Custom Plugins

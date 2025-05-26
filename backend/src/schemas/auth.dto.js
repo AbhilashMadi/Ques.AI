@@ -9,14 +9,13 @@ const commonFields = {
     .email({ message: ErrorMessages.email }),
   password: z
     .string({ required_error: ErrorMessages.required('Password') })
-    .regex(RegexPatterns.PASSWORD, { message: ErrorMessages.password })
+    .regex(RegexPatterns.PASSWORD_REGEX, { message: ErrorMessages.password }),
 }
 
-// Zod schema for user registration
 const registerDto = z.object({
   fullName: z
     .string({ required_error: ErrorMessages.required('Full name') })
-    .regex(RegexPatterns.FULL_NAME),
+    .regex(RegexPatterns.FULL_NAME_REGEX),
   email: commonFields.email,
   password: commonFields.password,
   confirmPassword: z
@@ -26,6 +25,8 @@ const registerDto = z.object({
   path: ['confirmCassword'],
   message: ErrorMessages.passwordMatch,
 });
+
+const verifyOtpDtp = z.object({ otp: z.string().min(6).max(6) })
 
 const loginDto = z.object({
   email: commonFields.email,
@@ -38,6 +39,11 @@ module.exports = {
     tags: ['auth'],
     summary: 'Register a new user',
     body: zodToJsonSchema(registerDto),
+  },
+  verifyOtpSchem: {
+    tags: ['auth'],
+    summary: 'Verify OTP',
+    body: zodToJsonSchema(verifyOtpDtp),
   },
   loginUserSchema: {
     tags: ['auth'],

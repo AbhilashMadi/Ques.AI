@@ -1,23 +1,27 @@
 const {
   registerUserSchema,
   loginUserSchema,
+  verifyOtpSchem,
 } = require('#schemas/auth.dto')
 
 module.exports = async function (fastify) {
   // User Registration
   fastify.post('/register', {
     schema: registerUserSchema,
-    handler: require('#handlers/auth/user-regiser.handler')
+    handler: require('#handlers/auth/user-register.handler')
   });
 
   // Verify Email
   fastify.post('/verify-email', {
-    schema: loginUserSchema,
-    handler: require('#handlers/auth/user-login.handler'),
+    schema: verifyOtpSchem,
+    handler: require('#handlers/auth/verify-email-otp.handler'),
   });
 
   // Login (Access + Refresh Tokens)
-  fastify.post('/login', require('#handlers/auth/verify-email-otp.handler'));
+  fastify.post('/login', {
+    schema: loginUserSchema,
+    handler: require('#handlers/auth/user-login.handler')
+  });
 
   // Refresh Access Token
   fastify.post('/refresh-token', require('#handlers/auth/refresh-token.handler'));

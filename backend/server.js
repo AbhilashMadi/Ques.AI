@@ -30,7 +30,7 @@ app.register(require('#plugins/redisio.plugin.js'), {
 })
 
 // Register routes
-app.register(require('#routes/auth'), { prefix: '/api/auth' })
+app.register(require('#routes/auth.routes'), { prefix: '/api/auth' })
 
 // Health check endpoint
 app.get('/health', async (req, res) => {

@@ -27,7 +27,7 @@ module.exports = async (request, reply) => {
 
   const redis = request.redis;
   const otp = generateOtp(); // 6-digit OTP
-  const userAgent = request.headers['user-agent'];
+  const userAgent = request.headers['user-agent'] || 'unknown';
 
   // Store OTP in Redis with expiration
   await redis.set(StorageKeys.STORE_OTP(newUser._id), otp, 'EX', envConfig.VERIFY_OTP_TTL);

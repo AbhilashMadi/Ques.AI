@@ -16,13 +16,16 @@ const {
 
 /**
  * Generate an access token
- * @param {Object} payload - Payload to include (e.g., { userId, role })
- * @param {String} [expiresIn='15m']
- * @returns {String} signed JWT access token
+ * @param {{ userId: string, role?: string }} payload - JWT payload
+ * @param {string} [expiresIn=ACCESS_TOKEN_EXP] - Expiration string (e.g., '15m', '1d')
+ * @returns {string} Signed JWT
  */
 function generateAccessToken(payload, expiresIn = ACCESS_TOKEN_EXP) {
   try {
-    return jwt.sign(payload, ACCESS_TOKEN_SECRET, { algorithm: 'HS256', expiresIn });
+    return jwt.sign(payload, ACCESS_TOKEN_SECRET, {
+      algorithm: 'HS256',
+      expiresIn,
+    });
   } catch (err) {
     throw new HttpException('Failed to generate access token');
   }
@@ -30,13 +33,16 @@ function generateAccessToken(payload, expiresIn = ACCESS_TOKEN_EXP) {
 
 /**
  * Generate a refresh token
- * @param {Object} payload - Payload to include (e.g., { userId })
- * @param {String} [expiresIn='7d']
- * @returns {String} signed JWT refresh token
+ * @param {{ userId: string }} payload - JWT payload
+ * @param {string} [expiresIn=REFRESH_TOKEN_EXP]
+ * @returns {string} Signed JWT
  */
 function generateRefreshToken(payload, expiresIn = REFRESH_TOKEN_EXP) {
   try {
-    return jwt.sign(payload, REFRESH_TOKEN_SECRET, { algorithm: 'HS256', expiresIn });
+    return jwt.sign(payload, REFRESH_TOKEN_SECRET, {
+      algorithm: 'HS256',
+      expiresIn,
+    });
   } catch (err) {
     throw new HttpException('Failed to generate refresh token');
   }
@@ -44,13 +50,15 @@ function generateRefreshToken(payload, expiresIn = REFRESH_TOKEN_EXP) {
 
 /**
  * Verify access token
- * @param {String} token - JWT string
- * @returns {Object} Decoded payload
+ * @param {string} token - JWT token string
+ * @returns {object} Decoded payload
  * @throws {UnauthorizedException}
  */
 function verifyAccessToken(token) {
   try {
-    return jwt.verify(token, ACCESS_TOKEN_SECRET, { algorithms: ['HS256'] });
+    return jwt.verify(token, ACCESS_TOKEN_SECRET, {
+      algorithms: ['HS256'],
+    });
   } catch (err) {
     throw new UnauthorizedException('Invalid or expired access token');
   }
@@ -58,13 +66,15 @@ function verifyAccessToken(token) {
 
 /**
  * Verify refresh token
- * @param {String} token - JWT string
- * @returns {Object} Decoded payload
+ * @param {string} token - JWT token string
+ * @returns {object} Decoded payload
  * @throws {UnauthorizedException}
  */
 function verifyRefreshToken(token) {
   try {
-    return jwt.verify(token, REFRESH_TOKEN_SECRET, { algorithms: ['HS256'] });
+    return jwt.verify(token, REFRESH_TOKEN_SECRET, {
+      algorithms: ['HS256'],
+    });
   } catch (err) {
     throw new UnauthorizedException('Invalid or expired refresh token');
   }
@@ -74,13 +84,16 @@ function verifyRefreshToken(token) {
  * Generate a short-lived OTP cookie token
  * Used to verify that OTP verification is done from the same client/device
  * 
- * @param {Object} payload - Typically { email, otpId }
- * @param {String} [expiresIn='5m']
- * @returns {String} JWT token
+ * @param {{ email: string, otpId: string }} payload - OTP payload
+ * @param {string} [expiresIn=OTP_VERIFY_TOKEN_EXP]
+ * @returns {string} JWT token
  */
 function generateOtpCookieToken(payload, expiresIn = OTP_VERIFY_TOKEN_EXP) {
   try {
-    return jwt.sign(payload, OTP_VERIFY_TOKEN_SECRET, { algorithm: 'HS256', expiresIn });
+    return jwt.sign(payload, OTP_VERIFY_TOKEN_SECRET, {
+      algorithm: 'HS256',
+      expiresIn,
+    });
   } catch (err) {
     throw new HttpException('Failed to generate OTP token');
   }
@@ -88,14 +101,17 @@ function generateOtpCookieToken(payload, expiresIn = OTP_VERIFY_TOKEN_EXP) {
 
 /**
  * Verify OTP cookie token
- * 
- * @param {String} token - JWT from cookie
- * @returns {Object} Decoded payload
+ * @param {string} token - JWT from cookie
+ * @returns {object} Decoded payload
+ * @throws {BadRequestException}
  */
 function verifyOtpCookieToken(token) {
   try {
-    return jwt.verify(token, OTP_VERIFY_TOKEN_SECRET, { algorithms: ['HS256'] });
+    return jwt.verify(token, OTP_VERIFY_TOKEN_SECRET, {
+      algorithms: ['HS256'],
+    });
   } catch (err) {
+    console.error('OTP token verification failed:', err);
     throw new BadRequestException('Invalid or expired OTP token');
   }
 }
@@ -106,5 +122,5 @@ module.exports = {
   verifyAccessToken,
   verifyRefreshToken,
   generateOtpCookieToken,
-  verifyOtpCookieToken
+  verifyOtpCookieToken,
 };

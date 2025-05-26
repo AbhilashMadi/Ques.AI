@@ -5,10 +5,8 @@ const loggerConfig = require('#configs/logger.config')
 const corsConfig = require('#configs/cors.config.js')
 const rateLimitConfig = require('#configs/rate-limit.config')
 
-const Fastify = require('fastify');
-const path = require('path');
-
 // Fastify instance
+const Fastify = require('fastify');
 const app = Fastify({ logger: loggerConfig[envConfig.NODE_ENV] });
 
 // Register plugins
@@ -30,15 +28,9 @@ app.register(require('#plugins/redisio.plugin.js'), {
 })
 
 // Register routes
-app.register(require('#routes/auth.routes'), { prefix: '/api/auth' })
-
-// Health check endpoint
-app.get('/health', async (req, res) => {
-  return { status: 'ok', timestamp: new Date().toISOString() };
-});
-
-// Error handler
-app.setErrorHandler(require('#handlers/global-error-handler'));
+app.register(require('#handlers/health/helth-check.handler')); // Health check endpoint / - baase
+app.register(require('#routes/auth.routes'), { prefix: '/api/auth' }) // Auth endpoints /auth - base
+app.setErrorHandler(require('#handlers/global/global-error.handler')); //Global Error handler
 
 // Start server
 const start = async () => {

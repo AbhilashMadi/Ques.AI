@@ -8,6 +8,7 @@ module.exports = fp(async function responsePlugin(fastify) {
     this.code(code).send({
       status: 'success',
       message,
+      timestamp: Date.now(),
       data,
     })
   })
@@ -20,6 +21,7 @@ module.exports = fp(async function responsePlugin(fastify) {
     this.code(err.statusCode).send({
       status: 'error',
       message: err.message,
+      timestamp: Date.now(),
       code: err?.code ?? code,
     })
   })

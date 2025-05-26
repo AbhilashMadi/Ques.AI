@@ -1,9 +1,9 @@
 const fp = require('fastify-plugin')
 const mongoose = require('mongoose')
 
-module.exports = fp(async function mongoosePlugin(fastify) {
+module.exports = fp(async function mongoosePlugin(fastify, options) {
   try {
-    const { DB_URL, DB_NAME, NODE_ENV } = require("#configs/env.config")
+    const { DB_URL, DB_NAME, NODE_ENV } = options;
     const conn = await mongoose.connect(`${DB_URL}${DB_NAME}`, {
       // Optional for better monitoring
       autoIndex: NODE_ENV === 'development',

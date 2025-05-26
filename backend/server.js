@@ -18,9 +18,19 @@ app.register(require('@fastify/rate-limit'), rateLimitConfig);
 
 // Register Custom Plugins
 app.register(require('#plugins/response.plugin'))
-app.register(require('#plugins/mongoose.plugin'))
+app.register(require('#plugins/mongoose.plugin'), {
+  DB_URL: envConfig.DB_URL,
+  DB_NAME: envConfig.DB_NAME,
+})
+app.register(require('#plugins/redisio.plugin.js'), {
+  REDIS_HOST: envConfig.REDIS_HOST,
+  REDIS_PORT: envConfig.REDIS_PORT,
+  REDIS_PASSWORD: envConfig.REDIS_PASSWORD,
+  REDIS_DB: envConfig.REDIS_DB,
+})
 
 // Register routes
+app.register(require('#routes/auth'), { prefix: '/api/auth' })
 
 // Health check endpoint
 app.get('/health', async (req, res) => {

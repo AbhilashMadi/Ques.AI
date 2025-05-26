@@ -1,3 +1,4 @@
+const User = require('#models/user.model')
 
 module.exports = async (request, reply) => {
   // TODO: Implement login logic
@@ -5,4 +6,5 @@ module.exports = async (request, reply) => {
   // - Generate tokens
   // - Store refresh token
   // - Return tokens
+  const { fullName, email, password, confirmPassword } = request.body;
 }

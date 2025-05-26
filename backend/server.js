@@ -1,21 +1,18 @@
 require('module-alias/register');
-
 const envConfig = require('#configs/env.config')
-const loggerConfig = require('#configs/logger.config')
-const corsConfig = require('#configs/cors.config.js')
-const rateLimitConfig = require('#configs/rate-limit.config')
 
 // Fastify instance
 const Fastify = require('fastify');
-const app = Fastify({ logger: loggerConfig[envConfig.NODE_ENV] });
+const app = Fastify({ logger: require('#configs/logger.config')[envConfig.NODE_ENV] });
 
 // Register plugins
-app.register(require('@fastify/helmet'));
-app.register(require('@fastify/cors'), corsConfig);
-app.register(require('@fastify/rate-limit'), rateLimitConfig);
+app.register(require('@fastify/helmet'), require('#configs/helmet.config')[envConfig.NODE_ENV]);
+app.register(require('@fastify/cors'), require('#configs/cors.config.js'));
+app.register(require('@fastify/rate-limit'), require('#configs/rate-limit.config'));
 
 // Register Custom Plugins
 app.register(require('#plugins/response.plugin'))
+app.register(require('#plugins/docs.plugin'))
 app.register(require('#plugins/mongoose.plugin'), {
   DB_URL: envConfig.DB_URL,
   DB_NAME: envConfig.DB_NAME,

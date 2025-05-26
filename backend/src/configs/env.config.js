@@ -16,7 +16,7 @@ const envSchema = z.object({
   REDIS_DB: z.coerce.number(),
 
   // Client Variables
-  CONSUMERS: z.string().url(),
+  CONSUMERS: z.string(),
 
   // Secrets
   PASSWORD_HASH_SALT: z.string().min(8),

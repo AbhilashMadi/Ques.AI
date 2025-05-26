@@ -24,7 +24,6 @@ const envSchema = z.object({
   // Secrets
   SECURE_COOKIE_SECRET: z.string().min(8),
 
-  PASSWORD_HASH_SALT: z.string().min(8),
   SALT_ROUNDS: z.coerce.number().min(10).max(15),
 
   OTP_VERIFY_TOKEN_SECRET: z.string().min(8),

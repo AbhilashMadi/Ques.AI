@@ -16,7 +16,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     minlength: 8,
-    select: false,
+    // select: false,
   },
   fullName: {
     type: String,
@@ -37,7 +37,7 @@ const userSchema = new Schema({
   toJSON: {
     virtuals: true,
     transform(_doc, ret) {
-      ret.id = ret._id;
+      ret.userId = ret._id;
 
       delete ret.password;
       delete ret._id;

@@ -5,6 +5,7 @@ const {
   resendVerifyOtpSchem,
   logoutUserSchema,
   refreshUserTokensSchema,
+  meClainSchema,
 } = require('#schemas/auth.dto');
 const authMiddleware = require('#middlewares/authenticate.middleware');
 
@@ -48,6 +49,7 @@ module.exports = async function (fastify) {
 
   // Get Current User
   fastify.get('/me', {
+    schema: meClainSchema,
     preValidation: authMiddleware,
     handler: require('#handlers/auth/me-claim.handler')
   });

@@ -61,5 +61,9 @@ module.exports = {
   refreshUserTokensSchema: {
     tags: ['auth'],
     summary: "Refresh access token"
+  },
+  meClainSchema: {
+    tags: ['auth'],
+    summary: "Claim 'Me'"
   }
 };

@@ -5,7 +5,7 @@ module.exports = fp(async (fastify) => {
     swagger: {
       info: {
         title: 'Podcast App API Docs',
-        description: 'API documentation for Ques.AI Podcast Platform',
+        description: 'API documentation for Ques.AI Podcast Platform \n GitHub: https://github.com/AbhilashMadi/Ques.AI',
         version: '1.0.0',
       },
       tags: [

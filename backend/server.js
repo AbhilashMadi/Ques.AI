@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config({ path: process.env.NODE_ENV === 'development' ? '.env.dev' : '.env.prod' })
+
 require('module-alias/register');
 const envConfig = require('#configs/env.config')
 

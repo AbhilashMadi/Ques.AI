@@ -53,5 +53,9 @@ module.exports = {
     tags: ['auth'],
     summary: "User login",
     body: zodToJsonSchema(loginDto),
+  },
+  logoutUserSchema: {
+    tags: ['auth'],
+    summary: "User logout",
   }
 };

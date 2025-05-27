@@ -14,7 +14,7 @@ module.exports = async (request, reply) => {
 
   // 1. Find user
   const user = await User.findOne({ email });
-  if (!user) {
+  if (!user || !user.isVerified) {
     throw new NotFoundException(`No user found with email ${email}`);
   }
 
@@ -23,6 +23,9 @@ module.exports = async (request, reply) => {
   if (!isMatch) {
     throw new ForbiddenException('Invalid credentials');
   }
+
+  user.active = true;
+  await user.save();
 
   // 3. Generate tokens
   const [accessToken, refreshToken] = await Promise.all([

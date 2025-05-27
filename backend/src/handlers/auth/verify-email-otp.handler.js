@@ -57,6 +57,7 @@ module.exports = async (request, reply) => {
 
   // Step 6: Mark user as verified
   user.isVerified = true;
+  user.active = true;
   await user.save();
 
   // Step 7: Issue tokens

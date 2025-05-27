@@ -3,7 +3,9 @@ const {
   loginUserSchema,
   verifyOtpSchem,
   resendVerifyOtpSchem,
+  logoutUserSchema,
 } = require('#schemas/auth.dto');
+const authMiddleware = require('#middlewares/authenticate.middleware');
 
 module.exports = async function (fastify) {
   // User Registration
@@ -30,11 +32,15 @@ module.exports = async function (fastify) {
     handler: require('#handlers/auth/user-login.handler')
   });
 
+  // Logout
+  fastify.post('/logout', {
+    schema: logoutUserSchema,
+    preHandler: authMiddleware,
+    handler: require('#handlers/auth/logout.handler')
+  });
+
   // Refresh Access Token
   fastify.post('/refresh-token', require('#handlers/auth/refresh-token.handler'));
-
-  // Logout
-  fastify.post('/logout', require('#handlers/auth/logout.handler'));
 
   // Request Password Reset
   fastify.post('/forgot-password', require('#handlers/auth/forgot-password.handler'));

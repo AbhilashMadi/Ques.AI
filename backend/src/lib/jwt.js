@@ -80,47 +80,9 @@ function verifyRefreshToken(token) {
   }
 }
 
-/**
- * Generate a short-lived OTP cookie token
- * Used to verify that OTP verification is done from the same client/device
- * 
- * @param {{ email: string, otpId: string }} payload - OTP payload
- * @param {string} [expiresIn=OTP_VERIFY_TOKEN_EXP]
- * @returns {string} JWT token
- */
-function generateOtpCookieToken(payload, expiresIn = OTP_VERIFY_TOKEN_EXP) {
-  try {
-    return jwt.sign(payload, OTP_VERIFY_TOKEN_SECRET, {
-      algorithm: 'HS256',
-      expiresIn,
-    });
-  } catch (err) {
-    throw new HttpException('Failed to generate OTP token');
-  }
-}
-
-/**
- * Verify OTP cookie token
- * @param {string} token - JWT from cookie
- * @returns {object} Decoded payload
- * @throws {BadRequestException}
- */
-function verifyOtpCookieToken(token) {
-  try {
-    return jwt.verify(token, OTP_VERIFY_TOKEN_SECRET, {
-      algorithms: ['HS256'],
-    });
-  } catch (err) {
-    console.error('OTP token verification failed:', err);
-    throw new BadRequestException('Invalid or expired OTP token');
-  }
-}
-
 module.exports = {
   generateAccessToken,
   generateRefreshToken,
   verifyAccessToken,
   verifyRefreshToken,
-  generateOtpCookieToken,
-  verifyOtpCookieToken,
 };

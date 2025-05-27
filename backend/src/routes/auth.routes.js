@@ -2,7 +2,8 @@ const {
   registerUserSchema,
   loginUserSchema,
   verifyOtpSchem,
-} = require('#schemas/auth.dto')
+  resendVerifyOtpSchem,
+} = require('#schemas/auth.dto');
 
 module.exports = async function (fastify) {
   // User Registration
@@ -15,6 +16,12 @@ module.exports = async function (fastify) {
   fastify.post('/verify-email', {
     schema: verifyOtpSchem,
     handler: require('#handlers/auth/verify-email-otp.handler'),
+  });
+
+  // Resend Verification Email
+  fastify.post('/resend-verification', {
+    schema: resendVerifyOtpSchem,
+    handler: require('#handlers/auth/resend-verify-otp.handler')
   });
 
   // Login (Access + Refresh Tokens)
@@ -40,8 +47,6 @@ module.exports = async function (fastify) {
   //   // - Verify current password
   //   // - Update to new password
   // });
-  // Resend Verification Email
-  fastify.post('/resend-verification', require('#handlers/auth/resend-verify-otp.handler'));
   // Get Current User
   fastify.get('/me',
     // { preValidation: [authenticate] },

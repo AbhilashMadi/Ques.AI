@@ -1,7 +1,6 @@
 const StorageKeys = require('#resources/storage-keys');
 const User = require('#models/user.model');
 const {
-  verifyOtpCookieToken,
   generateAccessToken,
   generateRefreshToken,
 } = require('#lib/jwt');
@@ -24,6 +23,7 @@ module.exports = async (request, reply) => {
 
   // Step 1: Extract and verify cookie - more robust extraction
   const { valid, value } = request.unsignCookie(request.cookies[StorageKeys.OTP_VERIFY]);
+  request.log.warn(valid, value);
 
   if (!valid) {
     throw new BadRequestException('Invalid or tampered OTP cookie');
@@ -40,6 +40,8 @@ module.exports = async (request, reply) => {
   const user = await User.findById(userId);
   if (!user) {
     throw new NotFoundException('User not found');
+  } else if (user.isVerified) {
+    throw new BadRequestException(`${email} already verfied, Please try to login.`)
   }
 
   // Step 4: Verify OTP from Redis
@@ -66,8 +68,8 @@ module.exports = async (request, reply) => {
   // Step 8: Set cookies with proper options
   reply
     .clearCookie(StorageKeys.OTP_VERIFY)
-    .setCookie(StorageKeys.ACCESS_TOKEN, accessToken)
-    .setCookie(StorageKeys.REFRESH_TOKEN, refreshToken);
+    .setCookie(StorageKeys.ACCESS_TOKEN, accessToken, { signed: false })
+    .setCookie(StorageKeys.REFRESH_TOKEN, refreshToken, { signed: false });
 
   // Step 9: Respond with success - using the actual user object
   return reply.success(user.toJSON(), 'User verified successfully', StatusCodes.CREATED);

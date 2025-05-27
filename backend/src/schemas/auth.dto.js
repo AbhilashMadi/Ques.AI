@@ -45,6 +45,10 @@ module.exports = {
     summary: 'Verify OTP',
     body: zodToJsonSchema(verifyOtpDtp),
   },
+  resendVerifyOtpSchem: {
+    tags: ['auth'],
+    summary: 'Resend Verify OTP',
+  },
   loginUserSchema: {
     tags: ['auth'],
     summary: "User login",

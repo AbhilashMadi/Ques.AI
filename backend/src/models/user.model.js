@@ -34,7 +34,6 @@ const userSchema = new Schema({
   },
 }, {
   timestamps: true,
-  virtuals: false,
   toJSON: {
     virtuals: true,
     transform(_doc, ret) {

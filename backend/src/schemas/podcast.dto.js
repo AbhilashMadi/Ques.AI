@@ -1,6 +1,5 @@
 const { z } = require('zod');
 const { zodToJsonSchema } = require('zod-to-json-schema');
-const { paginationQuerySchema } = require('#schemas/project.dto');
 
 const ErrorMessages = require('#resources/error-messages');
 const RegexPatterns = require('#resources/regex-patterns');
@@ -44,6 +43,24 @@ const getPodcastByIdDto = z.object({
     .regex(RegexPatterns.OBJECT_ID_REGEX, { message: ErrorMessages.invalidField('Podcast ID') }),
 });
 
+// DTO for updating a podcast
+const updatePodcastDto = z.object({
+  name: z
+    .string()
+    .min(3, { message: ErrorMessages.minLength('Podcast name', 3) })
+    .optional(),
+
+  sourceType: z.enum(['rss', 'youtube', 'upload'], {
+    invalid_type_error: ErrorMessages.invalidField('Source type'),
+  }).optional(),
+
+  sourceUrl: z.string().optional(),
+
+  file: fileDto.optional(),
+
+  transcript: z.string().optional(),
+});
+
 // Fastify-compatible schemas
 module.exports = {
   createPodcastSchema: {
@@ -52,16 +69,17 @@ module.exports = {
     body: zodToJsonSchema(createPodcastDto),
   },
 
-  getAllPodcastsSchema: {
-    tags: ['podcast'],
-    summary: 'Get all podcasts with pagination',
-    querystring: zodToJsonSchema(paginationQuerySchema),
-  },
-
   getPodcastByIdSchema: {
     tags: ['podcast'],
     summary: 'Get podcast by ID',
     params: zodToJsonSchema(getPodcastByIdDto),
+  },
+
+  updatePodcastDto: {
+    tags: ['podcast'],
+    summary: 'Update podcast by ID',
+    params: zodToJsonSchema(getPodcastByIdDto),
+    body: zodToJsonSchema(updatePodcastDto),
   },
 
   deletePodcastSchema: {

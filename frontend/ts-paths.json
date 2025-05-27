@@ -47,6 +47,9 @@
       ],
       "@resources/*": [
         "./src/resources/*"
+      ],
+      "@redux/*": [
+        "./src/redux/*"
       ]
     }
   }

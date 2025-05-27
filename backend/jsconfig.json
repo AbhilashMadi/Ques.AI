@@ -37,6 +37,9 @@
       ],
       "#resources/*": [
         "src/resources/*"
+      ],
+      "#templates/*": [
+        "src/templates/*"
       ]
     }
   },

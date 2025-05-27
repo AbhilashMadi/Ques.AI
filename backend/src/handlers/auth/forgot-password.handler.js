@@ -5,6 +5,7 @@ const {
   generatePasswordResetToken
 } = require('#utils/generators');
 const storageKeys = require("#resources/storage-keys");
+const passwordResetTemplate = require('#templates/password-reset.template');
 
 /**
  * Forgot Password
@@ -33,8 +34,23 @@ module.exports = async (request, reply) => {
   const resetLink = generatePasswordResetLink(email, rawToken);
   request.log.info(`Generated password reset link for ${email}: ${resetLink}`);
 
-  // TODO: sendResetPasswordEmail(user.email, resetLink);
+  // Step 5: sendResetPasswordEmail(user.email, resetLink);
+  try {
+    // Step 9: Send OTP to the client
+    await request.server.nodemailer.sendMail(
+      passwordResetTemplate({
+        email,
+        fullName: user.fullName,
+        from: envConfig.EMAIL_SMTP_USER,
+        expiryMinutes: envConfig.PASSWORD_RESET_TOKEN_TTL / 60,
+        resetLink,
+      })
+    );
+  } catch (error) {
+    request.log.error(error, 'Failed to send OTP email');
+    return reply.fail('Failed to send password reset link. Please try again later.', 'InternalServerError');
+  }
 
-  // Step 5: Respond to client
+  // Step 6: Respond to client
   return reply.success(null, 'If your account exists, you will receive a password reset link.');
 };

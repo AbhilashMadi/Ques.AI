@@ -34,7 +34,8 @@
 		"#schemas": "./src/schemas",
 		"#middlewares": "./src/middlewares",
 		"#lib": "./src/lib",
-		"#resources": "./src/resources"
+		"#resources": "./src/resources",
+		"#templates": "./src/templates"
 	},
 	"devDependencies": {
 		"pino-pretty": "^13.0.0"

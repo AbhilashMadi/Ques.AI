@@ -2,6 +2,7 @@ const User = require('#models/user.model');
 const StatusCodes = require('#utils/status-codes');
 const StorageKeys = require('#resources/storage-keys');
 const envConfig = require('#configs/env.config');
+const otpTemplate = require('#templates/otp.template')
 
 const { generateOtp } = require('#utils/generators');
 const { BadRequestException } = require('#utils/exceptions');
@@ -58,6 +59,21 @@ module.exports = async (request, reply) => {
     { maxAge: envConfig.VERIFY_OTP_TTL }
   );
 
-  // Step 9: Respond with success message and user data
+  try {
+    // Step 9: Send OTP to the client
+    await request.server.nodemailer.sendMail(
+      otpTemplate({
+        fullName,
+        otp,
+        email,
+        expiryMinutes: envConfig.VERIFY_OTP_TTL / 60
+      })
+    );
+  } catch (error) {
+    request.log.error(error, 'Failed to send OTP email');
+    return reply.fail('Failed to send OTP. Please try again later.', 'InternalServerError');
+  }
+
+  // Step 10: Respond with success message and user data
   return reply.success(user.toJSON(), 'User created or updated, please verify OTP', StatusCodes.CREATED);
 };

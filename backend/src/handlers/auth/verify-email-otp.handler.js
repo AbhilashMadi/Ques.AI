@@ -23,7 +23,7 @@ module.exports = async (request, reply) => {
   const redis = request.redis;
 
   // Step 1: Extract and verify cookie - more robust extraction
-  const { valid, value } = request.unsignCookie(request.cookies[StorageKeys.OTP_VERIFY]);
+  const { valid, value } = request.unsignCookie(request.cookies[StorageKeys.OTP_VERIFY] ?? '--');
   request.log.warn(valid, value);
 
   if (!valid) {

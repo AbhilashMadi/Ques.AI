@@ -10,7 +10,7 @@ const { verifyAccessToken } = require('#lib/jwt');
  */
 module.exports = async (request, reply) => {
   // Step 1: Retrieve access token from signed cookie
-  const { valid, value: accessToken } = request.unsignCookie(request.cookies[storageKeys.ACCESS_TOKEN]);
+  const { valid, value: accessToken } = request.unsignCookie(request.cookies[storageKeys.ACCESS_TOKEN] ?? '--');
 
   // Step 2: Validate presence and integrity of token
   if (!valid || !accessToken) {

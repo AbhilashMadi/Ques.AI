@@ -15,7 +15,7 @@ const envConfig = require('#configs/env.config');
  * @param {import("fastify").FastifyReply} reply 
  */
 module.exports = async (request, reply) => {
-  const { valid, value: refreshToken } = request.unsignCookie(request.cookies[StorageKeys.REFRESH_TOKEN]);
+  const { valid, value: refreshToken } = request.unsignCookie(request.cookies[StorageKeys.REFRESH_TOKEN] ?? '--');
 
   if (!valid || !refreshToken) {
     request.log.warn('Missing or invalid refresh token');

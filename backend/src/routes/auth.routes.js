@@ -36,14 +36,20 @@ module.exports = async function (fastify) {
   // Logout
   fastify.post('/logout', {
     schema: logoutUserSchema,
-    preHandler: authMiddleware,
+    preValidation: authMiddleware,
     handler: require('#handlers/auth/logout.handler')
   });
 
   // Refresh Access Token
-  fastify.post('/refresh-token', {
+  fastify.post('/refresh-tokens', {
     schema: refreshUserTokensSchema,
     handler: require('#handlers/auth/refresh-token.handler')
+  });
+
+  // Get Current User
+  fastify.get('/me', {
+    preValidation: authMiddleware,
+    handler: require('#handlers/auth/me-claim.handler')
   });
 
   // Request Password Reset
@@ -57,8 +63,4 @@ module.exports = async function (fastify) {
   //   // - Verify current password
   //   // - Update to new password
   // });
-  // Get Current User
-  fastify.get('/me',
-    // { preValidation: [authenticate] },
-    require('#handlers/auth/me-claim.handler'));
 }

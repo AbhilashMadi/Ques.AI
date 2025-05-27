@@ -12,7 +12,7 @@ const User = require('#models/user.model');
  */
 module.exports = async (request, reply) => {
   // Step 1: Unsign and validate OTP verification cookie
-  const { valid, value: cookie } = request.unsignCookie(request.cookies[StorageKeys.OTP_VERIFY]);
+  const { valid, value: cookie } = request.unsignCookie(request.cookies[StorageKeys.OTP_VERIFY] ?? '--');
 
   if (!valid) {
     request.log.warn('Attempt to resend OTP with invalid or expired OTP cookie');

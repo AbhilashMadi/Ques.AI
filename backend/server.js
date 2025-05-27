@@ -10,6 +10,7 @@ app.register(require('@fastify/helmet'), require('#configs/helmet.config')[envCo
 app.register(require('@fastify/cors'), require('#configs/cors.config.js'));
 app.register(require('@fastify/cookie'), require('#configs/cookie.config'));
 app.register(require('@fastify/rate-limit'), require('#configs/rate-limit.config'));
+app.register(require('fastify-nodemailer'), require('#configs/mail-service.config'));
 
 // Register Custom Plugins
 app.register(require('#plugins/response.plugin'))
@@ -18,7 +19,7 @@ app.register(require('#plugins/mongoose.plugin'), {
   DB_URL: envConfig.DB_URL,
   DB_NAME: envConfig.DB_NAME,
 })
-app.register(require('#plugins/redisio.plugin.js'), {
+app.register(require('#plugins/redisio.plugin'), {
   REDIS_HOST: envConfig.REDIS_HOST,
   REDIS_PORT: envConfig.REDIS_PORT,
   REDIS_PASSWORD: envConfig.REDIS_PASSWORD,

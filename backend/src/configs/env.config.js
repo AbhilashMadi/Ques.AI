@@ -34,6 +34,12 @@ const envSchema = z.object({
   REFRESH_TOKEN_EXP: z.string(),
   ACCESS_TOKEN_SECRET: z.string().min(32),
   ACCESS_TOKEN_EXP: z.string(),
+
+  // SMTP Credentials
+  EMAIL_TRANSPORTER_HOST: z.string(),
+  EMAIL_TRANSPORTER_PORT: z.coerce.number(),
+  EMAIL_SMTP_USER: z.string().email(),
+  EMAIL_SMTP_PASSWORD: z.string(),
 });
 
 // Validate environment variables

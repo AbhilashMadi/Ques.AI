@@ -1,5 +1,6 @@
 const StorageKeys = require('#resources/storage-keys');
 const User = require('#models/user.model');
+const envConfig = require('#configs/env.config');
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -60,17 +61,23 @@ module.exports = async (request, reply) => {
   user.active = true;
   await user.save();
 
+  const tokenPayload = {
+    userId: user.id,
+    email: user.email,
+    role: user.role
+  }
+
   // Step 7: Issue tokens
   const [accessToken, refreshToken] = await Promise.all([
-    generateAccessToken({ userId: user._id, email: user.email }),
-    generateRefreshToken({ userId: user._id, email: user.email }),
+    generateAccessToken(tokenPayload),
+    generateRefreshToken(tokenPayload),
   ]);
 
   // Step 8: Set cookies with proper options
   reply
     .clearCookie(StorageKeys.OTP_VERIFY)
-    .setCookie(StorageKeys.ACCESS_TOKEN, accessToken, { signed: false })
-    .setCookie(StorageKeys.REFRESH_TOKEN, refreshToken, { signed: false });
+    .setCookie(StorageKeys.ACCESS_TOKEN, accessToken, { maxAge: envConfig.ACCESS_TOKEN_TTL })
+    .setCookie(StorageKeys.REFRESH_TOKEN, refreshToken, { maxAge: envConfig.REFRESH_TOKEN_TTL });
 
   // Step 9: Respond with success - using the actual user object
   return reply.success(user.toJSON(), 'User verified successfully', StatusCodes.CREATED);

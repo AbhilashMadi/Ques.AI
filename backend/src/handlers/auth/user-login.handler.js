@@ -1,5 +1,6 @@
 const User = require('#models/user.model');
 const StorageKeys = require('#resources/storage-keys');
+const envConfig = require('#configs/env.config');
 const { NotFoundException, ForbiddenException } = require('#utils/exceptions');
 const { generateAccessToken, generateRefreshToken } = require('#lib/jwt');
 
@@ -28,15 +29,21 @@ module.exports = async (request, reply) => {
   await user.save();
 
   // 3. Generate tokens
+  const tokenPayload = {
+    userId: user.id,
+    email: user.email,
+    role: user.role
+  }
+
   const [accessToken, refreshToken] = await Promise.all([
-    generateAccessToken({ userId: user._id, email: user.email }),
-    generateRefreshToken({ userId: user._id, email: user.email }),
+    generateAccessToken(tokenPayload),
+    generateRefreshToken(tokenPayload),
   ]);
 
   // 4. Set cookies
   reply
-    .setCookie(StorageKeys.ACCESS_TOKEN, accessToken)
-    .setCookie(StorageKeys.REFRESH_TOKEN, refreshToken);
+    .setCookie(StorageKeys.ACCESS_TOKEN, accessToken, { maxAge: envConfig.ACCESS_TOKEN_TTL })
+    .setCookie(StorageKeys.REFRESH_TOKEN, refreshToken, { maxAge: envConfig.REFRESH_TOKEN_TTL });
 
   // 5. Respond with user info
   return reply.success(user.toJSON(), 'Logged in successfully');

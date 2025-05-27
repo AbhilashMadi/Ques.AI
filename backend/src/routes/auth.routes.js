@@ -4,6 +4,7 @@ const {
   verifyOtpSchem,
   resendVerifyOtpSchem,
   logoutUserSchema,
+  refreshUserTokensSchema,
 } = require('#schemas/auth.dto');
 const authMiddleware = require('#middlewares/authenticate.middleware');
 
@@ -40,7 +41,10 @@ module.exports = async function (fastify) {
   });
 
   // Refresh Access Token
-  fastify.post('/refresh-token', require('#handlers/auth/refresh-token.handler'));
+  fastify.post('/refresh-token', {
+    schema: refreshUserTokensSchema,
+    handler: require('#handlers/auth/refresh-token.handler')
+  });
 
   // Request Password Reset
   fastify.post('/forgot-password', require('#handlers/auth/forgot-password.handler'));

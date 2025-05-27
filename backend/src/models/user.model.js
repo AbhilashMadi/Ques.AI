@@ -45,6 +45,7 @@ const userSchema = new Schema({
 
       delete ret.password;
       delete ret._id;
+      delete ret.id;
       delete ret.__v;
 
       return ret;

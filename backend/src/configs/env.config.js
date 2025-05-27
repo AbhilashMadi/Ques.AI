@@ -20,6 +20,8 @@ const envSchema = z.object({
 
   // Timings & Timeouts
   VERIFY_OTP_TTL: z.coerce.number(),
+  ACCESS_TOKEN_TTL: z.coerce.number(),
+  REFRESH_TOKEN_TTL: z.coerce.number(),
 
   SALT_ROUNDS: z.coerce.number().min(10).max(15),
 

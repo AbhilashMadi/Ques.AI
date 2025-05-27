@@ -57,5 +57,9 @@ module.exports = {
   logoutUserSchema: {
     tags: ['auth'],
     summary: "User logout",
+  },
+  refreshUserTokensSchema: {
+    tags: ['auth'],
+    summary: "Refresh access token"
   }
 };

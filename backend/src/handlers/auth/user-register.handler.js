@@ -48,13 +48,13 @@ module.exports = async (request, reply) => {
   const otp = generateOtp();
 
   // Step 7: Store OTP in Redis with expiration time (TTL)
-  await redis.set(StorageKeys.STORE_OTP(user._id), otp, 'EX', envConfig.VERIFY_OTP_TTL);
+  await redis.set(StorageKeys.STORE_OTP(user.id), otp, 'EX', envConfig.VERIFY_OTP_TTL);
   reply.log.info(`Generated OTP for ${email}: ${otp}`);
 
   // Step 8: Set OTP verification cookie with userId and userAgent, expires after TTL
   reply.setCookie(
     StorageKeys.OTP_VERIFY,
-    JSON.stringify({ userId: user._id.toString(), userAgent }),
+    JSON.stringify({ userId: user.id, userAgent }),
     { maxAge: envConfig.VERIFY_OTP_TTL }
   );
 

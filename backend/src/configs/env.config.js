@@ -17,13 +17,16 @@ const envSchema = z.object({
 
   // Client Variables
   CONSUMERS: z.string(),
+  CLIENT: z.string().url(),
 
   // Timings & Timeouts
   VERIFY_OTP_TTL: z.coerce.number(),
   ACCESS_TOKEN_TTL: z.coerce.number(),
   REFRESH_TOKEN_TTL: z.coerce.number(),
+  PASSWORD_RESET_TOKEN_TTL: z.coerce.number(),
 
   SALT_ROUNDS: z.coerce.number().min(10).max(15),
+  VERIFY_OTP_LENGTH: z.coerce.number().min(4).max(10),
 
   // Secrets
   SECURE_COOKIE_SECRET: z.string().min(8),

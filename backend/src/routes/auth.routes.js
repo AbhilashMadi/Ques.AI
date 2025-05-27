@@ -6,6 +6,8 @@ const {
   logoutUserSchema,
   refreshUserTokensSchema,
   meClainSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
 } = require('#schemas/auth.dto');
 const authMiddleware = require('#middlewares/authenticate.middleware');
 
@@ -55,14 +57,14 @@ module.exports = async function (fastify) {
   });
 
   // Request Password Reset
-  fastify.post('/forgot-password', require('#handlers/auth/forgot-password.handler'));
+  fastify.post('/forgot-password', {
+    schema: forgotPasswordSchema,
+    handler: require('#handlers/auth/forgot-password.handler'),
+  });
 
   // Reset Password
-  fastify.post('/reset-password', require('#handlers/auth/reset-password.handler'));
-  // Change Password (authenticated)
-  // fastify.post('/change-password', { preValidation: [authenticate] }, async (request, reply) => {
-  //   // TODO: Implement password change
-  //   // - Verify current password
-  //   // - Update to new password
-  // });
+  fastify.post('/reset-password', {
+    schema: resetPasswordSchema,
+    handler: require('#handlers/auth/reset-password.handler'),
+  });
 }

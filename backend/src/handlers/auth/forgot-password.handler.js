@@ -1,6 +1,40 @@
+const User = require('#models/user.model');
+const envConfig = require('#configs/env.config');
+const {
+  generatePasswordResetLink,
+  generatePasswordResetToken
+} = require('#utils/generators');
+const storageKeys = require("#resources/storage-keys");
 
+/**
+ * Forgot Password
+ * @param {import("fastify").FastifyRequest} request 
+ * @param {import("fastify").FastifyReply} reply 
+ */
 module.exports = async (request, reply) => {
-  // TODO: Implement password reset request
-  // - Generate reset token
-  // - Send email with reset link
-}
+  const { email } = request.body;
+
+  const user = await User.findOne({ email });
+
+  // Step 1: Always respond with generic message
+  if (!user) {
+    request.log.info(`Password reset requested for non-existing email: ${email}`);
+    return reply.success(null, 'If your account exists, you will receive a password reset link.');
+  }
+
+  // Step 2: Generate raw and hashed token
+  const { rawToken, hashedToken } = generatePasswordResetToken();
+
+  // Step 3: Store hashed token in Redis with expiration
+  const redisKey = storageKeys.STORE_TOKEN(user.id);
+  await request.redis.set(redisKey, hashedToken, 'EX', envConfig.PASSWORD_RESET_TOKEN_TTL);
+
+  // Step 4: Generate password reset link
+  const resetLink = generatePasswordResetLink(email, rawToken);
+  request.log.info(`Generated password reset link for ${email}: ${resetLink}`);
+
+  // TODO: sendResetPasswordEmail(user.email, resetLink);
+
+  // Step 5: Respond to client
+  return reply.success(null, 'If your account exists, you will receive a password reset link.');
+};

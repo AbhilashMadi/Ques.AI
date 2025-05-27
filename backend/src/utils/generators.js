@@ -1,4 +1,5 @@
-const { randomBytes, randomUUID } = require('crypto');
+const { randomBytes, randomUUID, createHash } = require('crypto');
+const envConfig = require('#configs/env.config')
 
 function generateUUID() {
   return randomUUID();
@@ -8,8 +9,8 @@ function generateRandomString(bytes = 16) {
   return randomBytes(bytes).toString('hex');
 }
 
-function generateOtp(length = 6) {
-  if (length < 4 || length > 12) {
+function generateOtp(length = envConfig.VERIFY_OTP_LENGTH) {
+  if (length < 4 || length > 10) {
     throw new Error('OTP length must be between 4 and 12 characters');
   }
 
@@ -28,8 +29,25 @@ function generateOtp(length = 6) {
   return otp;
 }
 
+function generatePasswordResetLink(email, token) {
+  return `${envConfig.CLIENT}/reset-password?email=${email}&token=${token}`;
+}
+
+function generatePasswordResetToken() {
+  const rawToken = randomBytes(32).toString('hex');
+  const hashedToken = createHash('sha256').update(rawToken).digest('hex');
+  return { rawToken, hashedToken };
+}
+
+function verifyPasswordResetToken(rawToken) {
+  return createHash('sha256').update(rawToken).digest('hex');
+}
+
 module.exports = {
   generateUUID,
   generateRandomString,
   generateOtp,
+  generatePasswordResetLink,
+  generatePasswordResetToken,
+  verifyPasswordResetToken,
 };

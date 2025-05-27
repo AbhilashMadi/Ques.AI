@@ -2,7 +2,7 @@
 	"type": "commonjs",
 	"scripts": {
 		"prestart": "pnpm install",
-		"start": "node -r --env-file=.env.prod server.js",
+		"start": "node --env-file=.env.prod server.js",
 		"start:dev": "node --watch --env-file=.env.dev server.js"
 	},
 	"dependencies": {

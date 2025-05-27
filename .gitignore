@@ -6,4 +6,5 @@
 
 #IGNORE FILES BACKEND
 /backend/node_modules
-/backend/.env
+/backend/.env.dev
+/backend/.env.prod

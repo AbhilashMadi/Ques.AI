@@ -15,6 +15,12 @@ module.exports = fp(async function redisPlugin(fastify, options) {
     port: REDIS_PORT,
     password: REDIS_PASSWORD || undefined,
     db: REDIS_DB || 0,
+    tls: {},
+    retryStrategy(times) {
+      // Stop reconnecting after 10 attempts
+      if (times > 10) return null
+      return Math.min(times * 100, 2000) // exponential backoff
+    }
   })
 
   // Log on connect

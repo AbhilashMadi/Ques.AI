@@ -34,11 +34,10 @@ module.exports = async (request, reply) => {
   reply.log.info(`Generated OTP for ${email}: ${otp}`);
 
   // Set signed, secure cookie to identify same device
-  const otpToken = generateOtpCookieToken({
-    userId: newUser._id.toString(),
-    userAgent,
-  });
+  reply.setCookie(
+    StorageKeys.OTP_VERIFY,
+    JSON.stringify({ userId: newUser._id.toString(), userAgent }),
+    { maxAge: envConfig.VERIFY_OTP_TTL });
 
-  reply.setCookie(StorageKeys.OTP_VERIFY, otpToken, { maxAge: envConfig.VERIFY_OTP_TTL });
   return reply.success(newUser.toJSON(), 'User created', StatusCodes.CREATED);
 };

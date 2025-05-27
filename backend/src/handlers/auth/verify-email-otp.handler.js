@@ -23,21 +23,13 @@ module.exports = async (request, reply) => {
   const redis = request.redis;
 
   // Step 1: Extract and verify cookie - more robust extraction
-  const { valid, value: otpCookie } = request.unsignCookie(request.cookies[StorageKeys.OTP_VERIFY]);
+  const { valid, value } = request.unsignCookie(request.cookies[StorageKeys.OTP_VERIFY]);
 
-  if (!valid || !otpCookie) {
+  if (!valid) {
     throw new BadRequestException('Invalid or tampered OTP cookie');
   }
 
-  let payload;
-  try {
-    payload = verifyOtpCookieToken(otpCookie);
-  } catch (err) {
-    console.error('OTP Cookie verification failed:', err);
-    throw new BadRequestException('Invalid or expired OTP cookie');
-  }
-
-  const { userId, userAgent: savedUserAgent } = payload;
+  const { userId, userAgent: savedUserAgent } = JSON.parse(value);
 
   // Step 2: Validate User-Agent
   if (userAgent !== savedUserAgent) {
@@ -58,22 +50,25 @@ module.exports = async (request, reply) => {
     throw new BadRequestException('Invalid OTP');
   }
 
-  // Step 5: Mark user as verified
+  // Step 5: Remove the existing OTP from cache
+  request.redis.del(StorageKeys.STORE_OTP(userId))
+
+  // Step 6: Mark user as verified
   user.isVerified = true;
   await user.save();
 
-  // Step 6: Issue tokens
+  // Step 7: Issue tokens
   const [accessToken, refreshToken] = await Promise.all([
     generateAccessToken({ userId: user._id, email: user.email }),
     generateRefreshToken({ userId: user._id, email: user.email }),
   ]);
 
-  // Step 7: Set cookies with proper options
+  // Step 8: Set cookies with proper options
   reply
     .clearCookie(StorageKeys.OTP_VERIFY)
     .setCookie(StorageKeys.ACCESS_TOKEN, accessToken)
     .setCookie(StorageKeys.REFRESH_TOKEN, refreshToken);
 
-  // Step 8: Respond with success - using the actual user object
+  // Step 9: Respond with success - using the actual user object
   return reply.success(user.toJSON(), 'User verified successfully', StatusCodes.CREATED);
 };

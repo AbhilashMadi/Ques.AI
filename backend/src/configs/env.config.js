@@ -21,17 +21,12 @@ const envSchema = z.object({
   // Timings & Timeouts
   VERIFY_OTP_TTL: z.coerce.number(),
 
-  // Secrets
-  SECURE_COOKIE_SECRET: z.string().min(8),
-
   SALT_ROUNDS: z.coerce.number().min(10).max(15),
 
-  OTP_VERIFY_TOKEN_SECRET: z.string().min(8),
-  OTP_VERIFY_TOKEN_EXP: z.string(),
-
+  // Secrets
+  SECURE_COOKIE_SECRET: z.string().min(8),
   REFRESH_TOKEN_SECRET: z.string().min(32),
   REFRESH_TOKEN_EXP: z.string(),
-
   ACCESS_TOKEN_SECRET: z.string().min(32),
   ACCESS_TOKEN_EXP: z.string(),
 });

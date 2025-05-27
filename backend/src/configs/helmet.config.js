@@ -1,6 +1,6 @@
 
 module.exports = {
-  development: {
+  common: {
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
@@ -9,6 +9,7 @@ module.exports = {
       },
     },
   },
-  production: undefined,
+  development: this.common,
+  production: this.common,
   test: undefined,
 }

@@ -17,8 +17,6 @@ const paginationQuerySchema = z.object({
     .default('10'),
 });
 
-
-
 const createProjectDto = z.object({
   title: z
     .string({ required_error: ErrorMessages.required('Project title') })
@@ -36,6 +34,7 @@ const getProjectByIdDto = z.object({
 });
 
 const deleteProjectDto = getProjectByIdDto;
+const getPodcastsDto = getProjectByIdDto;
 
 module.exports = {
   createProjectSchema: {
@@ -61,4 +60,13 @@ module.exports = {
     summary: 'Delete project by ID',
     params: zodToJsonSchema(deleteProjectDto),
   },
+
+  getProjectPodcastsSchema: {
+    tags: ['project'],
+    summary: 'Get all the podcasts of the project with ID',
+    params: zodToJsonSchema(getPodcastsDto),
+    querystring: zodToJsonSchema(paginationQuerySchema)
+  },
+
+  paginationQuerySchema,
 };

@@ -3,8 +3,10 @@ const {
   deleteProjectSchema,
   getAllProjectsSchema,
   getProjectByIdSchema,
+  getProjectPodcastsSchema,
 } = require('#schemas/project.dto');
 const authMiddleware = require('#middlewares/authenticate.middleware');
+const { schema } = require("../models/user.model");
 
 module.exports = async function (fastify) {
   // Create a new project
@@ -34,4 +36,11 @@ module.exports = async function (fastify) {
     preValidation: authMiddleware,
     handler: require('#handlers/project/delete-project.handler'),
   });
+
+  // Get All project podcasts
+  fastify.get('/projects/:projectId/podcasts', {
+    schema: getProjectPodcastsSchema,
+    preValidation: authMiddleware,
+    handler: require('#handlers/project/get-project-podcasts.handler')
+  })
 };

@@ -1,7 +1,7 @@
 
 module.exports = async function (fastify) {
 
-  fastify.get('/health', (_, replay) => {
+  fastify.get('/healthz', (_, replay) => {
     return replay.success({ uptime: process.uptime() }, 'Health')
   })
 

@@ -11,8 +11,12 @@ module.exports = async function (request, reply) {
   const { userId } = request.user;
   const { title, description } = request.body;
 
+  request.log.info({ userId, title }, 'CreateProject: Creating new project');
+
   const project = new Project({ userId, title, description });
   await project.save();
 
-  return reply.success(project.toJSON(), 'Project created successfully', StatusCodes.CREATED)
+  request.log.info({ projectId: project._id }, 'CreateProject: Project created successfully');
+
+  return reply.success(project.toJSON(), 'Project created successfully', StatusCodes.CREATED);
 };

@@ -29,6 +29,7 @@ app.register(require('#plugins/redisio.plugin'), {
 // Register routes
 app.register(require('#handlers/health/helth-check.handler')); // Health check endpoint / - baase
 app.register(require('#routes/auth.routes'), { prefix: '/api/auth' }) // Auth endpoints /auth - base
+app.register(require('#routes/project.routes', { prefix: '/api/projects' })) // Projects endpoints /projects - base
 app.setErrorHandler(require('#handlers/global/global-error.handler')); //Global Error handler
 
 // Start server

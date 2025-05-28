@@ -29,7 +29,7 @@ module.exports = async function (request, reply) {
   request.log.info({ count: projects.length, total }, 'GetProjects: Projects fetched');
 
   return reply.success({
-    projects: projects.map(p => p.toJSON()),
+    list: projects.map(p => p.toJSON()),
     pagination: {
       total,
       page,

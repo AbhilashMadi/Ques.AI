@@ -1,11 +1,16 @@
 import { Button, Checkbox, Input, SecretInput } from '@custom';
 import { useForm } from '@hooks/use-form';
 import { loginFormValidationSchema, type LoginFormInput } from '@schemas/login-form-schema';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ServerKeys from '@resources/server-keys';
 import { SitePaths } from '@configs/site-config';
+import { toast } from 'react-hot-toast'
+import { useLoginUserMutation } from '@/redux/auth/auth-api';
 
 export default function LoginPage() {
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const navigate = useNavigate();
+
   const {
     errors,
     handleBlur,
@@ -21,7 +26,16 @@ export default function LoginPage() {
       [ServerKeys.REMEMBER]: true,
     },
     validationSchema: loginFormValidationSchema,
-    onSubmit: console.log,
+    onSubmit: async (values) => {
+      try {
+        const { message } = await loginUser(values).unwrap();
+        toast.success(message);
+        navigate(SitePaths.PROJECTS);
+      } catch (error: any) {
+        console.error(error);
+        toast.error(error?.data?.message || error.message || 'Something went wrong');
+      }
+    }
   })
 
   return (<form
@@ -61,7 +75,7 @@ export default function LoginPage() {
       </Link>
     </div>
 
-    <Button type="submit" className="w-full">
+    <Button type="submit" className="w-full" loading={isLoading} disabled={isLoading}>
       Login
     </Button>
 

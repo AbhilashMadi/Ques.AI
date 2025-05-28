@@ -22,6 +22,10 @@ const ProjectSchema = new mongoose.Schema({
     enum: ['active', 'archived'],
     default: 'active',
   },
+  podcastsCount: {
+    type: Number,
+    default: 0,
+  }
 }, {
   timestamps: true,
   toJSON: {

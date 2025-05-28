@@ -1,7 +1,7 @@
-import { lazy, Suspense } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import Loader from '@components/common/loader';
 import { SitePaths } from '@configs/site-config';
+import { lazy, Suspense } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Loader from '@components/common/loader';
 
 // Context Layer
 const ContextProvider = lazy(() => import('@context/provider'));
@@ -57,7 +57,7 @@ function App() {
           {/* Fallback Route */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </Suspense>
+      </Suspense >
     </ContextProvider>
   );
 }

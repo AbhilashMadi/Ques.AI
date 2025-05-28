@@ -2,7 +2,7 @@ import { z } from 'zod';
 import ServerKeys from '@resources/server-keys';
 
 export const createProjectValidationSchema = z.object({
-  [ServerKeys.PROJECT_NAME]: z
+  [ServerKeys.TITLE]: z
     .string({
       required_error: 'Project name is required',
       invalid_type_error: 'Project name must be a string',
@@ -12,6 +12,10 @@ export const createProjectValidationSchema = z.object({
     .regex(/^[a-zA-Z0-9_\-\s]+$/, {
       message: 'Project name can only contain letters, numbers, spaces, hyphens, and underscores',
     }),
+  [ServerKeys.DESCRIPTION]: z
+    .string()
+    .max(300)
+    .optional(),
 });
 
 export type CreateProjectInput = z.infer<typeof createProjectValidationSchema>;

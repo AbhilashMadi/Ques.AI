@@ -2,11 +2,7 @@ import { SitePaths } from '@/configs/site-config';
 import ServerKeys from '@/resources/server-keys';
 import { memo, type FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-
-export type Project = {
-  [ServerKeys.PROJECT_ID]: string;
-  [ServerKeys.PROJECT_NAME]: string;
-};
+import { type Project } from '@/types/response.types';
 
 interface IProjectCard {
   project: Project;
@@ -23,7 +19,7 @@ const getInitials = (name: string) =>
     .slice(0, 2);
 
 const ProjectCard: FC<IProjectCard> = memo(({ project }) => {
-  const initials = useMemo(() => getInitials(project[ServerKeys.PROJECT_NAME]), [project]);
+  const initials = useMemo(() => getInitials(project[ServerKeys.TITLE]), [project]);
   const avatarBg = useMemo(() => avatarColors[Math.floor(Math.random() * avatarColors.length)],
     [project[ServerKeys.PROJECT_ID]]);
 
@@ -36,7 +32,7 @@ const ProjectCard: FC<IProjectCard> = memo(({ project }) => {
       </div>
       <div className="flex flex-col justify-between gap-y-3">
         <div>
-          <h5 className="text-sm font-semibold text-purple-700">{project[ServerKeys.PROJECT_NAME]}</h5>
+          <h5 className="text-sm font-semibold text-purple-700">{project[ServerKeys.TITLE]}</h5>
           <p className="text-xs text-foreground">4 Files</p>
         </div>
         <p className="text-xs text-gray-400">Last edited a week ago</p>

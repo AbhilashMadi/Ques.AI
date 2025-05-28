@@ -31,3 +31,23 @@ export type User = {
   [ServerKeys.UPDATED_AT]: string;
   [ServerKeys.USER_ID]: string;
 }
+
+export type Project = {
+  [ServerKeys.PROJECT_ID]: string;
+  [ServerKeys.USER_ID]: string;
+  [ServerKeys.STATUS]: 'active' | 'archived';
+  [ServerKeys.TITLE]: string;
+  [ServerKeys.DESCRIPTION]: string;
+  [ServerKeys.CREATED_AT]: string;
+  [ServerKeys.UPDATED_AT]: string;
+}
+
+export interface PaginatedResponse<T = unknown> {
+  [ServerKeys.LIST]: T[],
+  [ServerKeys.PAGINATION]: {
+    [ServerKeys.TOTAL]: number,
+    [ServerKeys.PAGE]: number,
+    [ServerKeys.LIMIT]: number,
+    [ServerKeys.PAGES]: number,
+  }
+}

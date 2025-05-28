@@ -5,7 +5,8 @@ const ServerKeys = {
   CONFIRM_PASSWORD: 'confirmPassword',
   REMEMBER: 'remember',
   FULL_NAME: 'fullName',
-  PROJECT_NAME: 'projectName',
+  TITLE: 'title',
+  DESCRIPTION: 'description',
   PROJECT_ID: 'projectId',
   TRANSCRIPT_NAME: 'transcriptName',
   TRANSCRIPT: 'transcript',
@@ -19,6 +20,13 @@ const ServerKeys = {
   STATUS_CODE: 'statusCode',
   ERROR: 'error',
   MESSAGE: 'message',
+  STATUS: 'status',
+  LIST: 'list',
+  PAGINATION: 'pagination',
+  TOTAL: 'total',
+  PAGE: 'page',
+  LIMIT: 'limit',
+  PAGES: 'pages',
 } as const;
 
 type ServerKeys = typeof ServerKeys[keyof typeof ServerKeys];

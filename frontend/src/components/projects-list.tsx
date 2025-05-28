@@ -1,25 +1,16 @@
 import { type FC } from 'react';
-import { type Project } from '@components/project-card';
+import type { Project } from '@/types/response.types';
+
 import ProjectCard from '@components/project-card';
 import { Button } from '@custom';
 import { PlusCircleIcon } from '@icons';
 
-const projects: Project[] = [
-  {
-    projectId: '1',
-    projectName: 'Sample Project'
-  },
-  {
-    projectId: '2',
-    projectName: 'United Project'
-  }
-];
-
 interface IProjectsListProps {
   onCreateProjectPress: () => void;
+  projects: Project[];
 }
 
-const ProjectsList: FC<IProjectsListProps> = ({ onCreateProjectPress }) => {
+const ProjectsList: FC<IProjectsListProps> = ({ onCreateProjectPress, projects }) => {
   return (
     <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-6 xl:px-0 py-8">
       {/* Header: Button & Title */}

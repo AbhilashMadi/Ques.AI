@@ -22,11 +22,9 @@ app.register(require('#plugins/mongoose.plugin'), {
   DB_URL: envConfig.DB_URL,
   DB_NAME: envConfig.DB_NAME,
 })
-app.register(require('#plugins/redisio.plugin'), {
-  REDIS_HOST: envConfig.REDIS_HOST,
-  REDIS_PORT: envConfig.REDIS_PORT,
-  REDIS_PASSWORD: envConfig.REDIS_PASSWORD,
-  REDIS_DB: envConfig.REDIS_DB,
+app.register(require('#plugins/redis.plugin'), {
+  url: envConfig.REDIS_URL,
+  token: envConfig.REDIS_TOKEN,
 })
 
 // Register routes

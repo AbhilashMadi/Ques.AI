@@ -1,13 +1,15 @@
 import { SitePaths } from '@/configs/site-config';
 import { Button, OtpInput } from '@custom';
-import { useVerifyUserOtpMutation } from '@redux/auth/auth-api';
-import { useState } from 'react';
+import { useResendVerficationOtpMutation, useVerifyUserOtpMutation } from '@redux/auth/auth-api';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function OtpPage() {
   const [otp, setOtp] = useState('');
   const [verifyOtp, { isLoading }] = useVerifyUserOtpMutation();
+  const [resendVerficationOTP, { isLoading: resendingOtp }] = useResendVerficationOtpMutation();
+  const [resendTimer, setResendTimer] = useState(60);
   const navigate = useNavigate();
 
   const handleOtpSubmit = async (): Promise<void> => {
@@ -28,8 +30,34 @@ export default function OtpPage() {
         'Verification failed. Please try again or request a new OTP.'
       );
     }
-
   };
+
+  const handleResendOtp = async (): Promise<void> => {
+    try {
+      const { message } = await resendVerficationOTP().unwrap();
+      toast.success(message);
+      // Reset timer to 60 seconds
+      setResendTimer(60);
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.data?.message || 'Something went wrong');
+      navigate(SitePaths.AUTH_REGISTER);
+    }
+  };
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    if (resendTimer > 0) {
+      interval = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [resendTimer]);
 
   return (
     <form
@@ -42,6 +70,7 @@ export default function OtpPage() {
         Enter the 6-digit verification code that was sent to your email address.
       </p>
       <OtpInput className="mt-2" onChange={setOtp} />
+
       <Button
         type="submit"
         className="w-full"
@@ -49,13 +78,18 @@ export default function OtpPage() {
         disabled={isLoading}>
         Submit OTP
       </Button>
-      <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-        Need to modify any details?{' '}
-        <Link
-          to={SitePaths.AUTH_REGISTER}
-          className="text-blue-600 hover:underline dark:text-blue-400">
-          Register
-        </Link>
+
+      <p className="text-muted">
+        If you can't find the verification code, please request a new OTP after {resendTimer > 0 ? resendTimer : 0} seconds.
+        <br />
+        <Button
+          type="button"
+          variant="link"
+          className="p-0 h-auto inline"
+          onClick={handleResendOtp}
+          disabled={resendingOtp || resendTimer > 0}>
+          Resend OTP
+        </Button>
       </p>
     </form>
   );

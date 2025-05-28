@@ -1,9 +1,10 @@
 import type { FC } from 'react';
 import { logoPrimaryImg } from '@assets';
 import { SiteConfig } from '@configs/site-config';
-import { GearIcon, BellIcon } from '@icons';
+import { GearIcon } from '@icons';
 import { Button } from '@custom';
 import ThemeSwitch from '@components/common/theme-switch';
+import LogoutButton from '@components/common/logout-button';
 
 const ProjectsPageHeader: FC = () => {
   return (
@@ -20,13 +21,11 @@ const ProjectsPageHeader: FC = () => {
           />
         </div>
         <div className="flex gap-2 items-center flex-wrap sm:flex-nowrap">
+          <ThemeSwitch />
           <Button size="icon" variant="secondary">
             <GearIcon height={18} />
           </Button>
-          <Button size="icon" variant="secondary">
-            <BellIcon height={18} />
-          </Button>
-          <ThemeSwitch />
+          <LogoutButton size="icon" variant="secondary" />
         </div>
       </div>
     </header>

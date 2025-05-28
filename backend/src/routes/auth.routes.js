@@ -44,7 +44,7 @@ module.exports = async function (fastify) {
   });
 
   // Refresh Access Token
-  fastify.post('/refresh-tokens', {
+  fastify.get('/refresh-tokens', {
     schema: refreshUserTokensSchema,
     handler: require('#handlers/auth/refresh-token.handler')
   });

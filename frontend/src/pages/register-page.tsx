@@ -2,7 +2,7 @@ import { SitePaths } from '@configs/site-config';
 import { Button, Input, SecretInput } from '@custom';
 import { useForm } from '@hooks/use-form';
 import ServerKeys from '@resources/server-keys';
-import { type RegisterFormInput, registerFormSchema } from '@schemas/register-form-schema';
+import { type RegisterFormInput, registerFormSchema } from '@schemas/auth-schemas';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRegisterUserMutation } from '@redux/auth/auth-api';
 import { toast } from 'react-hot-toast';

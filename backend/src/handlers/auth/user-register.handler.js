@@ -5,7 +5,7 @@ const envConfig = require('#configs/env.config');
 const otpTemplate = require('#templates/otp.template')
 
 const { generateOtp } = require('#utils/generators');
-const { BadRequestException } = require('#utils/exceptions');
+const { BadRequestException, HttpException } = require('#utils/exceptions');
 
 /**
  * Register user and initiate OTP verification
@@ -18,11 +18,9 @@ module.exports = async (request, reply) => {
   const { fullName, email, password } = request.body;
 
   // Step 2: Get Redis instance and user-agent header
-  const redis = request.redis;
   const userAgent = request.headers['user-agent'] || 'unknown';
 
   let user;
-
   // Step 3: Check if a user with the given email already exists
   const existingUser = await User.findOne({ email });
 
@@ -49,8 +47,19 @@ module.exports = async (request, reply) => {
   const otp = generateOtp();
 
   // Step 7: Store OTP in Redis with expiration time (TTL)
-  await redis.set(StorageKeys.STORE_OTP(user.id), otp, 'EX', envConfig.VERIFY_OTP_TTL);
   reply.log.info(`Generated OTP for ${email}: ${otp}`);
+
+  try {
+    const key = StorageKeys.STORE_OTP(user.id);
+    const ttl = envConfig.VERIFY_OTP_TTL;
+    request.log.info(`Setting OTP in Redis with key: ${key}, TTL: ${ttl}s`);
+
+    await request.redis.set(key, otp, { ex: ttl });
+    request.log.info('OTP set successfully in Redis');
+  } catch (error) {
+    request.log.error(error);
+    throw new HttpException('Could not store OTP, please try again later.');
+  }
 
   // Step 8: Set OTP verification cookie with userId and userAgent, expires after TTL
   reply.setCookie(

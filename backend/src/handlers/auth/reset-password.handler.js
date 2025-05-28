@@ -10,45 +10,54 @@ const { verifyPasswordResetToken } = require('#utils/generators');
  * @param {import("fastify").FastifyReply} reply 
  */
 module.exports = async (request, reply) => {
-  const { email, token } = request.query;
-  const { password, confirmPassword } = request.body;
+  try {
+    const { token } = request.query;
+    const { password, confirmPassword } = request.body;
 
-  // Step 1: Validate required fields
-  if (!email || !token || !password || !confirmPassword) {
-    throw new BadRequestException('Missing required fields');
+    // Step 1: Validate required fields
+    if (!token || !password || !confirmPassword) {
+      throw new BadRequestException('Missing required fields.');
+    }
+
+    // Step 2: Ensure passwords match
+    if (password !== confirmPassword) {
+      throw new BadRequestException('Passwords do not match.');
+    }
+
+    // Step 3: Lookup email from Redis using token
+    const email = await request.redis.get(token);
+    if (!email) {
+      throw new BadRequestException('Invalid or expired token. Please request a new link.');
+    }
+
+    // Step 4: Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new NotFoundException('User not found.');
+    }
+
+    // Step 5: Verify token matches the one stored in Redis
+    const hashedToken = verifyPasswordResetToken(token);
+    const redisKey = StorageKeys.STORE_TOKEN(user.id);
+    const storedToken = await request.redis.get(redisKey);
+
+    if (!storedToken || storedToken !== hashedToken) {
+      throw new BadRequestException('Invalid or expired token. Please request a new link.');
+    }
+
+    // Step 6: Update user password
+    user.password = password;
+    await user.save(); // pre-save middleware hashes the password
+
+    // Step 7: Clean up tokens in Redis
+    await request.redis.del(redisKey);
+    await request.redis.del(token);
+
+    // Step 8: Final response
+    request.log.info({ msg: 'Password reset successful', userId: user._id });
+    return reply.success(null, 'Your password has been reset successfully.');
+  } catch (error) {
+    request.log.error(error);
+    throw error;
   }
-
-  // Step 2: Ensure passwords match
-  if (password !== confirmPassword) {
-    throw new BadRequestException('Passwords do not match');
-  }
-
-  // Step 3: Find user by email
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new NotFoundException('Invalid email or token');
-  }
-
-  // Step 4: Hash the provided raw token
-  const hashedToken = verifyPasswordResetToken(token);
-
-  // Step 5: Retrieve stored hashed token from Redis
-  const redisKey = StorageKeys.STORE_TOKEN(user.id);
-  const storedToken = await request.redis.get(redisKey);
-
-  // Step 6: Validate token match
-  if (!storedToken || storedToken !== hashedToken) {
-    throw new BadRequestException('Token is invalid or has expired');
-  }
-
-  // Step 7: Update user password (ensure you have a pre-save hook to hash it)
-  user.password = password;
-  await user.save();
-
-  // Step 8: Clean up the used token from Redis
-  await request.redis.del(redisKey);
-
-  // Step 9: Log and send response
-  request.log.info({ msg: 'Password reset successful', userId: user._id });
-  return reply.success(null, 'Your password has been reset successfully');
 };

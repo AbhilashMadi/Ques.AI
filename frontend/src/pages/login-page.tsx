@@ -1,6 +1,6 @@
 import { Button, Checkbox, Input, SecretInput } from '@custom';
 import { useForm } from '@hooks/use-form';
-import { loginFormValidationSchema, type LoginFormInput } from '@schemas/login-form-schema';
+import { loginFormValidationSchema, type LoginFormInput } from '@schemas/auth-schemas';
 import { Link, useNavigate } from 'react-router-dom';
 import ServerKeys from '@resources/server-keys';
 import { SitePaths } from '@configs/site-config';

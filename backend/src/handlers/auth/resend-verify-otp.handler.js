@@ -3,6 +3,7 @@ const { BadRequestException, NotFoundException, UnauthorizedException } = requir
 const StorageKeys = require('#resources/storage-keys');
 const envConfig = require('#configs/env.config');
 const User = require('#models/user.model');
+const otpTemplate = require('#templates/otp.template');
 
 /**
  * Resend OTP handler
@@ -40,8 +41,33 @@ module.exports = async (request, reply) => {
   const otp = generateOtp();
   const email = user.email;
 
-  await request.redis.set(StorageKeys.STORE_OTP(userId), otp, 'EX', envConfig.VERIFY_OTP_TTL);
-  request.log.info(`Resent OTP for ${email}: ${otp}`);
+  try {
+    const key = StorageKeys.STORE_OTP(user.id);
+    const ttl = envConfig.VERIFY_OTP_TTL;
+    request.log.info(`Setting OTP in Redis with key: ${key}, TTL: ${ttl}s`);
+
+    await request.redis.set(key, otp, { ex: ttl });
+    request.log.info('OTP set successfully in Redis');
+  } catch (error) {
+    request.log.error(error);
+    throw new HttpException('Could not store OTP, please try again later.');
+  }
+
+  // Step 9: Send OTP to the client
+  try {
+    request.log.info(`Resent OTP for ${email}: ${otp}`);
+    await request.server.nodemailer.sendMail(
+      otpTemplate({
+        fullName: user.fullName,
+        otp,
+        email,
+        expiryMinutes: envConfig.VERIFY_OTP_TTL / 60
+      })
+    );
+  } catch (error) {
+    request.log.error(error, 'Failed to send OTP email');
+    return reply.fail('Failed to send OTP. Please try again later.', 'InternalServerError');
+  }
 
   // Step 6: Reset OTP_VERIFY cookie with fresh expiry
   reply.setCookie(

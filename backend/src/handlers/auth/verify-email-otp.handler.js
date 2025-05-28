@@ -49,7 +49,7 @@ module.exports = async (request, reply) => {
   const storedOtp = await redis.get(StorageKeys.STORE_OTP(userId));
   if (!storedOtp) {
     throw new BadRequestException('OTP expired');
-  } else if (storedOtp !== otp) {
+  } else if (storedOtp != otp) {
     throw new BadRequestException('Invalid OTP');
   }
 

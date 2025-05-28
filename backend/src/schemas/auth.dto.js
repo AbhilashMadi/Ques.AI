@@ -48,7 +48,6 @@ const resetPasswordDto = z.object({
 })
 
 const resetPasswordQuerySchema = z.object({
-  email: commonFields.email,
   token: z.string(),
 })
 

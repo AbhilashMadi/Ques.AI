@@ -11,26 +11,24 @@ function generateRandomString(bytes = 16) {
 
 function generateOtp(length = envConfig.VERIFY_OTP_LENGTH) {
   if (length < 4 || length > 10) {
-    throw new Error('OTP length must be between 4 and 12 characters');
+    throw new Error('OTP length must be between 4 and 10 digits');
   }
 
-  const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const digits = '0123456789';
   let otp = '';
 
-  // Use crypto.randomBytes for secure random number generation
   const randomValues = randomBytes(length);
 
   for (let i = 0; i < length; i++) {
-    // Use modulo to get a random index within charset bounds
-    const randomIndex = randomValues[i] % charset.length;
-    otp += charset[randomIndex];
+    const randomIndex = randomValues[i] % digits.length;
+    otp += digits[randomIndex];
   }
 
   return otp;
 }
 
-function generatePasswordResetLink(email, token) {
-  return `${envConfig.CLIENT}/reset-password?email=${email}&token=${token}`;
+function generatePasswordResetLink(token) {
+  return `${envConfig.CLIENT}/auth/reset-password?token=${token}`;
 }
 
 function generatePasswordResetToken() {

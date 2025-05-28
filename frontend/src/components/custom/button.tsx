@@ -30,7 +30,7 @@ export const buttonVariants = tv({
 
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
 
-interface IButtonProps
+export interface IButtonProps
   extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
   ButtonVariants {
   loading?: boolean,

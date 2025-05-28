@@ -10,10 +10,8 @@ const envSchema = z.object({
   DB_URL: z.string().url().default('mongodb://127.0.0.1:27017/'),
   DB_NAME: z.string().default('ques_ai'),
 
-  REDIS_HOST: z.string(),
-  REDIS_PORT: z.coerce.number(),
-  REDIS_PASSWORD: z.string().optional(),
-  REDIS_DB: z.coerce.number(),
+  REDIS_URL: z.string().url(),
+  REDIS_TOKEN: z.string(),
 
   // Client Variables
   CONSUMERS: z.string(),

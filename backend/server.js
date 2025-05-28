@@ -30,8 +30,8 @@ app.register(require('#plugins/redis.plugin'), {
 // Register routes
 app.register(require('#handlers/health/helth-check.handler')); // Health check endpoint / - baase
 app.register(require('#routes/auth.routes'), { prefix: '/api/auth' }) // Auth endpoints /auth - base
-app.register(require('#routes/project.routes', { prefix: '/api/projects' })) // Projects endpoints /projects - base
-app.register(require('#routes/podcast.routes', { prefix: '/api/podcast' })) // Podcasts endpoints /prodcasts - base
+app.register(require('#routes/project.routes'), { prefix: '/api/projects' }) // Projects endpoints /projects - base
+app.register(require('#routes/podcast.routes'), { prefix: '/api/podcast' }) // Podcasts endpoints /prodcasts - base
 app.setErrorHandler(require('#handlers/global/global-error.handler')); //Global Error handler
 
 // Start server

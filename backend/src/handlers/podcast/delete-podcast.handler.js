@@ -9,7 +9,7 @@ const { NotFoundException } = require('#utils/exceptions');
  */
 module.exports = async function (request, reply) {
   const { userId } = request.user;
-  const { podcastId } = request.body;
+  const { podcastId } = request.params;
 
   console.log(`[Podcast::Delete] Request by user ${userId} for podcast ${podcastId}`);
   const podcast = await Podcast.findOne({ _id: podcastId, userId, status: 'active' });

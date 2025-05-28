@@ -11,7 +11,7 @@ const { generateAccessToken, generateRefreshToken } = require('#lib/jwt');
  * @param {import("fastify").FastifyReply} reply 
  */
 module.exports = async (request, reply) => {
-  const { email, password } = request.body;
+  const { email, password, remember } = request.body;
 
   // 1. Find user
   const user = await User.findOne({ email });
@@ -42,8 +42,14 @@ module.exports = async (request, reply) => {
 
   // 4. Set cookies
   reply
-    .setCookie(StorageKeys.ACCESS_TOKEN, accessToken, { maxAge: envConfig.ACCESS_TOKEN_TTL })
-    .setCookie(StorageKeys.REFRESH_TOKEN, refreshToken, { maxAge: envConfig.REFRESH_TOKEN_TTL });
+    .setCookie(
+      StorageKeys.ACCESS_TOKEN,
+      accessToken,
+      { maxAge: remember ? envConfig.ACCESS_TOKEN_TTL : undefined })
+    .setCookie(
+      StorageKeys.REFRESH_TOKEN,
+      refreshToken,
+      { maxAge: remember ? envConfig.REFRESH_TOKEN_TTL : undefined });
 
   // 5. Respond with user info
   return reply.success(user.toJSON(), 'Logged in successfully');

@@ -31,6 +31,7 @@ const verifyOtpDtp = z.object({ otp: z.string().min(6).max(6) })
 const loginDto = z.object({
   email: commonFields.email,
   password: commonFields.password,
+  remember: z.boolean().default(true),
 })
 
 const forgotPasswordDto = z.object({

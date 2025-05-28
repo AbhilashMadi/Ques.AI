@@ -10,7 +10,7 @@ module.exports = {
     signed: true,
     httpOnly: true,
     secure: envConfig.NODE_ENV === 'production',
-    sameSite: 'Strict',
+    sameSite: 'None',
     path: '/',
   }
 }

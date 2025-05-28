@@ -12,7 +12,7 @@ module.exports = async function (request, reply) {
 
   // Optional query-string pagination:  ?page=1&limit=10
   const page = Number(request.query.page) || 1;
-  const limit = Number(request.query.limit) || 10;
+  const limit = Number(request.query.limit) || 20;
   const skip = (page - 1) * limit;
   request.log.info({ page, limit, skip }, 'GetProjects: Pagination parameters');
 

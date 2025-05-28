@@ -20,7 +20,7 @@ module.exports = async function (request, reply) {
   }
 
   const page = Number(request.query.page) || 1;
-  const limit = Number(request.query.limit) || 5;
+  const limit = Number(request.query.limit) || 20;
   const skip = (page - 1) * limit;
 
   const query = { projectId, userId, status: 'active' };
@@ -36,7 +36,7 @@ module.exports = async function (request, reply) {
   ]);
 
   return reply.success({
-    podcasts: podcasts.map(p => p.toJSON()),
+    list: podcasts.map(p => p.toJSON()),
     pagination: {
       total,
       page,

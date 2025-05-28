@@ -37,10 +37,10 @@ module.exports = async (request, reply) => {
     const ttl = envConfig.PASSWORD_RESET_TOKEN_TTL;
 
     // Store hashed token for verification
-    await request.redis.set(userTokenKey, hashedToken, { EX: ttl });
+    await request.redis.set(userTokenKey, hashedToken, { ex: ttl });
 
     // Store email against the raw token for reverse lookup
-    await request.redis.set(tokenToEmailKey, email, { EX: ttl });
+    await request.redis.set(tokenToEmailKey, email, { ex: ttl });
 
     request.log.info(`Password reset token stored: ${userTokenKey}, TTL: ${ttl}s`);
   } catch (error) {

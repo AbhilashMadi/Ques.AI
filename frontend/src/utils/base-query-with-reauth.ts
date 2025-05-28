@@ -20,7 +20,7 @@ export const baseQueryWithReauth: BaseQueryFn<
   // If 401, try to refresh token
   if (result.error?.status === 401) {
     const refreshResult = await rawBaseQuery(
-      { url: '/auth/refresh-tokens', method: 'GET' },
+      { url: '/auth/refresh-tokens', method: 'GET', credentials: 'include' },
       api,
       extraOptions
     );

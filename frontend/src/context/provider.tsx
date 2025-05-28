@@ -4,12 +4,14 @@ import ThemeProvider from '@context/theme-provider';
 import StorageKeys from '@resources/storage-keys';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from '@redux/store';
+import { Toaster } from 'react-hot-toast';
 
 export default function Provider({ children }: { children: ReactNode }) {
   return (
     <ReduxProvider store={store}>
       <ThemeProvider storageKey={StorageKeys.APP_THEME}>
         <BrowserRouter>
+          <Toaster />
           {children}
         </BrowserRouter>
       </ThemeProvider>

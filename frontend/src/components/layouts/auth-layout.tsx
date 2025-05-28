@@ -31,7 +31,7 @@ export default function LoginLayout() {
           />
 
           {/* Taglines */}
-          <div className="space-y-6 text-primary-foreground font-secondary">
+          <div className="space-y-6 text-white font-secondary">
             <h1 className="text-6xl">
               Your podcast will <br />no longer just a hobby.
             </h1>

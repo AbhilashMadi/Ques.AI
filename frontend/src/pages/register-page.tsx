@@ -3,9 +3,14 @@ import { Button, Input, SecretInput } from '@custom';
 import { useForm } from '@hooks/use-form';
 import ServerKeys from '@resources/server-keys';
 import { type RegisterFormInput, registerFormSchema } from '@schemas/register-form-schema';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useRegisterUserMutation } from '@redux/auth/auth-api';
+import { toast } from 'react-hot-toast';
 
 export default function RegisterPage() {
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const navigate = useNavigate();
+
   const {
     errors,
     values,
@@ -22,7 +27,17 @@ export default function RegisterPage() {
       [ServerKeys.CONFIRM_PASSWORD]: '',
     },
     validationSchema: registerFormSchema,
-    onSubmit: console.log,
+    onSubmit: async (values) => {
+      try {
+        await registerUser(values).unwrap();
+        toast.success('OTP sent! Please check your email to verify your account.');
+        navigate(SitePaths.AUTH_OTP);
+      } catch (error: any) {
+        console.error(error);
+        toast.error(error?.data?.message || error.message || 'Something went wrong');
+      }
+    },
+
   });
 
   return (
@@ -67,7 +82,11 @@ export default function RegisterPage() {
         />
       </div>
 
-      <Button type="submit" className="w-full">
+      <Button
+        type="submit"
+        className="w-full"
+        loading={isLoading}
+        disabled={isLoading}>
         Register
       </Button>
 

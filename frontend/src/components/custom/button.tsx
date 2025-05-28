@@ -1,6 +1,7 @@
 import type { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react';
 import { tv, type VariantProps } from 'tailwind-variants';
 import { cn } from '@lib/utils';
+import { spinnerSrc } from '@assets';
 
 export const buttonVariants = tv({
   base: 'inline-flex items-center justify-center rounded-sm text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background cursor-pointer',
@@ -31,18 +32,21 @@ export type ButtonVariants = VariantProps<typeof buttonVariants>;
 
 interface IButtonProps
   extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
-  ButtonVariants { }
+  ButtonVariants {
+  loading?: boolean,
+}
 
 const Button: FC<IButtonProps> = ({
   variant,
   size,
   className,
   children,
+  loading = false,
   ...props
 }) => {
   return (
     <button className={cn(buttonVariants({ variant, size }), className)} {...props}>
-      {children}
+      {loading && <img src={spinnerSrc} height={20} width={20} className="inline-block mr-1" />}{children}
     </button>
   );
 };

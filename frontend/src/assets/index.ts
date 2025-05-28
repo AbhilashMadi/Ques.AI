@@ -10,3 +10,4 @@ export { default as rssImg } from './images/rss.svg';
 export { default as youtubeImg } from './images/youtube.svg';
 export { default as uploadImg } from './images/upload.svg';
 export { default as uploadIconImg } from './images/upload-icon.svg';
+export { default as spinnerSrc } from './tube-spinner.svg';

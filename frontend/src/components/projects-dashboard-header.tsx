@@ -1,6 +1,6 @@
 import LogoutButton from '@components/common/logout-button';
 import { Breadcrumb, Button, Tooltip } from '@custom';
-import { HomeIcon, LogOutIcon } from '@icons';
+import { BellIcon, HomeIcon } from '@icons';
 import { type FC } from 'react';
 
 const ProjectsDashboardHeader: FC = () => {
@@ -14,11 +14,24 @@ const ProjectsDashboardHeader: FC = () => {
     />
     <div className="flex gap-2">
       <Tooltip content="Notifications" position="left">
-        <LogoutButton size="icon" variant="secondary" className="rounded-full" />
+        <Button
+          variant="secondary"
+          size="icon"
+          className="rounded-full">
+          <BellIcon height={16} />
+        </Button>
       </Tooltip>
-      <Tooltip content="Logout" position="left">
-        <Button variant="secondary" size="icon" className="rounded-full text-destructive"><LogOutIcon height={16} /></Button>
-      </Tooltip>
+      <LogoutButton
+        tooltipProps={{
+          position: 'left',
+          content: 'Logout',
+          children: <span>Logout</span>
+        }}
+        buttonProps={{
+          size: 'icon',
+          variant: 'secondary',
+          className: 'rounded-full'
+        }} />
     </div>
   </header>)
 }

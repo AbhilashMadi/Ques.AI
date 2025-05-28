@@ -1,8 +1,8 @@
 import type { FC, SVGProps } from 'react';
 
-type IIconProps = FC<SVGProps<SVGSVGElement>>;
+export type IIconProps = SVGProps<SVGSVGElement>;
 
-export const EyeIcon: IIconProps = (props) => {
+export const EyeIcon: FC<IIconProps> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@ export const EyeIcon: IIconProps = (props) => {
   );
 };
 
-export const EyeCloseIcon: IIconProps = (props) => {
+export const EyeCloseIcon: FC<IIconProps> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@ export const EyeCloseIcon: IIconProps = (props) => {
   );
 };
 
-export const Sun: IIconProps = (props) => {
+export const Sun: FC<IIconProps> = (props) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg"
       width="24" height="24"
@@ -70,7 +70,7 @@ export const Sun: IIconProps = (props) => {
   )
 }
 
-export const Moon: IIconProps = (props) => {
+export const Moon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -87,7 +87,7 @@ export const Moon: IIconProps = (props) => {
   </svg>)
 }
 
-export const PlusCircleIcon: IIconProps = (props) => {
+export const PlusCircleIcon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -108,7 +108,7 @@ export const PlusCircleIcon: IIconProps = (props) => {
   )
 }
 
-export const GearIcon: IIconProps = (props) => {
+export const GearIcon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -126,7 +126,7 @@ export const GearIcon: IIconProps = (props) => {
   )
 }
 
-export const BellIcon: IIconProps = (props) => {
+export const BellIcon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -146,7 +146,7 @@ export const BellIcon: IIconProps = (props) => {
   )
 }
 
-export const XIcon: IIconProps = (props) => {
+export const XIcon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -165,7 +165,7 @@ export const XIcon: IIconProps = (props) => {
   </svg>)
 }
 
-export const PlusIcon: IIconProps = (props) => {
+export const PlusIcon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -182,7 +182,7 @@ export const PlusIcon: IIconProps = (props) => {
   </svg>)
 }
 
-export const PencilIcon: IIconProps = (props) => {
+export const PencilIcon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -197,7 +197,7 @@ export const PencilIcon: IIconProps = (props) => {
     <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /><path d="m15 5 4 4" /></svg>)
 }
 
-export const LayersIcon: IIconProps = (props) => {
+export const LayersIcon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -214,7 +214,7 @@ export const LayersIcon: IIconProps = (props) => {
   </svg>)
 }
 
-export const DiamondIcon: IIconProps = (props) => {
+export const DiamondIcon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -232,7 +232,7 @@ export const DiamondIcon: IIconProps = (props) => {
   </svg>)
 }
 
-export const ChevronRight: IIconProps = (props) => {
+export const ChevronRight: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -250,7 +250,7 @@ export const ChevronRight: IIconProps = (props) => {
   </svg>)
 }
 
-export const LogOutIcon: IIconProps = (props) => {
+export const LogOutIcon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -268,7 +268,7 @@ export const LogOutIcon: IIconProps = (props) => {
   </svg>)
 }
 
-export const HomeIcon: IIconProps = (props) => {
+export const HomeIcon: FC<IIconProps> = (props) => {
   return (<svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -285,7 +285,7 @@ export const HomeIcon: IIconProps = (props) => {
   </svg>)
 }
 
-export const MoveLeftIcon: IIconProps = (props) => (<svg
+export const MoveLeftIcon: FC<IIconProps> = (props) => (<svg
   xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"

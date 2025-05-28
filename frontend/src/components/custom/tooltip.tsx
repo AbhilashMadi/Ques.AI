@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import { type FC, type ReactNode, useState } from 'react';
 
-interface ITooltipProps {
+export interface ITooltipProps {
   children: ReactNode;
   content: ReactNode;
   position?: 'top' | 'bottom' | 'left' | 'right';

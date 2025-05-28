@@ -1,21 +1,45 @@
-import type { FC } from 'react';
-import { Button } from '@custom';
-import { BellIcon } from '@icons';
 import type { IButtonProps } from '@components/custom/button';
-import { useLogoutUserMutation } from '@redux/auth/auth-api';
+import type { ITooltipProps } from '@components/custom/tooltip';
+import type { IIconProps } from '@components/icons';
+import type { FC } from 'react';
 
-const LogoutButton: FC<IButtonProps> = (props) => {
+import { Button, Tooltip } from '@custom';
+import { LogOutIcon } from '@icons';
+import { useLogoutUserMutation } from '@redux/auth/auth-api';
+import { toast } from 'react-hot-toast';
+import { cn } from '@/lib/utils';
+
+interface ILogoutButtonProps {
+  tooltipProps?: Partial<ITooltipProps>,
+  buttonProps?: Partial<IButtonProps>,
+  iconProps?: Partial<IIconProps>,
+}
+
+const LogoutButton: FC<ILogoutButtonProps> = (props) => {
+  const { buttonProps, iconProps, tooltipProps } = props;
   const [logout] = useLogoutUserMutation();
 
   const handleClick = async (...args: Parameters<NonNullable<IButtonProps['onClick']>>) => {
-    await logout();
-    if (props.onClick) props.onClick(...args);
+    try {
+      const { message } = await logout().unwrap();
+      toast.success(message);
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.data?.message || error.message || 'Something went wrong');
+    }
+
+    if (buttonProps?.onClick) buttonProps.onClick(...args);
   };
 
   return (
-    <Button {...props} onClick={handleClick}>
-      <BellIcon height={18} />
-    </Button>
+    <Tooltip {...tooltipProps} content={tooltipProps?.content ?? 'Logout'}>
+      <Button {...buttonProps} onClick={handleClick}>
+        <LogOutIcon
+          {...iconProps}
+          height={iconProps?.height ?? 16}
+          className={cn('text-destructive', iconProps?.className)} />
+      </Button>
+    </Tooltip>
   );
 };
 

@@ -23,12 +23,19 @@ const projectsApi = createApi({
       }),
       providesTags: ['PROJECTS'],
     }),
+    deleteProject: builder.mutation<SuccessResponse<void>, string>({
+      query: (projectId) => ({
+        url: `/projects/${projectId}`,
+        method: 'DELETE'
+      })
+    })
   }),
 });
 
 export const {
   useCreateProjectMutation,
   useGetAllProjectsQuery,
+  useDeleteProjectMutation,
 } = projectsApi;
 
 export default projectsApi;

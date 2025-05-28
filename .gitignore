@@ -8,5 +8,3 @@
 /backend/node_modules
 /backend/.env.dev
 /backend/.env.prod
-# Local Netlify folder
-.netlify

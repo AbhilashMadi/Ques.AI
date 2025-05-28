@@ -1,6 +1,7 @@
 import { SitePaths } from '@/configs/site-config';
 import useSessionStorage from '@/hooks/use-session-storage';
 import { cn } from '@/lib/utils';
+import { useDeleteProjectMutation } from '@/redux/projects/projects-api';
 import StorageKeys from '@/resources/storage-keys';
 import {
   logoPrimaryImg,
@@ -22,21 +23,37 @@ import {
   PencilIcon,
   PlusIcon,
   Sun,
+  TrashIcon,
 } from '@icons';
 import {
   useCallback,
   type FC
 } from 'react';
-import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const Sider: FC = () => {
   const [collapse, setCollapse] = useSessionStorage(StorageKeys.COLLSPED, false);
   const { theme, setTheme } = useTheme();
+  const [deleteProject, { isLoading: deletingProject }] = useDeleteProjectMutation();
 
   const isDark = theme === 'dark';
 
   const toggleCollapse = () => setCollapse((prev) => !prev);
   const toggleTheme = useCallback(() => { setTheme(isDark ? 'light' : 'dark') }, [isDark, setTheme]);
+
+  const { projectId } = useParams();
+  const navigate = useNavigate();
+  const handleDeletProject = async () => {
+    try {
+      const { message } = await deleteProject(projectId!).unwrap();
+      toast.success(message);
+      navigate(SitePaths.PROJECTS);
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.data?.message || error.message || 'Something went wrong');
+    }
+  }
 
   return (
     <aside
@@ -79,6 +96,14 @@ const Sider: FC = () => {
         <div className="flex-1 flex justify-end flex-col space-y-2">
           <Tooltip content="Help" className={!collapse ? 'hidden' : ''}>
             <NavItem collapse={collapse} icon={<GearIcon height={20} />} title="Help" />
+          </Tooltip>
+          <Tooltip content="Delete Project" className={!collapse ? 'hidden' : ''}>
+            <NavItem
+              collapse={collapse}
+              icon={<TrashIcon height={20} />}
+              title="Delete Project"
+              onPress={handleDeletProject}
+              disabled={deletingProject} />
           </Tooltip>
           <Tooltip content={isDark ? 'Change theme to Light' : 'Change theme to Dark'}>
             <NavItem

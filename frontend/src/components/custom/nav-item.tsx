@@ -8,6 +8,7 @@ interface NavItemProps {
   active?: boolean;
   className?: string;
   onPress?: () => void;
+  disabled?: boolean;
 }
 
 const NavItem: FC<NavItemProps> = ({
@@ -17,6 +18,7 @@ const NavItem: FC<NavItemProps> = ({
   active = false,
   className = '',
   onPress,
+  disabled,
 }) => {
   return (
     <button
@@ -26,7 +28,8 @@ const NavItem: FC<NavItemProps> = ({
         'cursor-pointer rounded transition-colors duration-200',
         className)}
       aria-label={collapse ? title : undefined}
-      onClick={onPress}>
+      onClick={onPress}
+      disabled={disabled}>
       <span className="flex-shrink-0">{icon}</span>
       {!collapse && (<span className="whitespace-nowrap font-medium transition-opacity duration-200">
         {title}

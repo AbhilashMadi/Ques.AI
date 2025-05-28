@@ -27,6 +27,14 @@ const ServerKeys = {
   PAGE: 'page',
   LIMIT: 'limit',
   PAGES: 'pages',
+  PODCASTS_COUNT: 'podcastsCount',
+  NAME: 'name',
+  SIZE: 'size',
+  MIME_TYPE: 'mimeType',
+  URL: 'url',
+  PODCAST_ID: 'podcastId',
+  SOURCE_TYPE: 'sourceType',
+  SOURCE_URL: 'sourceUrl',
 } as const;
 
 type ServerKeys = typeof ServerKeys[keyof typeof ServerKeys];

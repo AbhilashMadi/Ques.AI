@@ -1,48 +1,99 @@
 import type { FC } from 'react';
-import { useMemo } from 'react';
-import { Button, Table } from '@custom';
+import type { Podcast, PodcastsListResponseType } from '@/types/response.types';
 import type { TableColumnType } from '@components/custom/table';
 
-const TranscriptsList: FC = () => {
-  const data = [
-    { id: 1, name: 'THE SIDEPOD S2 EPISODE 15', dateTime: '25 Oct 23 | 09:04' },
-    { id: 2, name: 'THE SIDEPOD S2 EPISODE 17', dateTime: '27 Oct 23 | 11:08' },
-    { id: 3, name: 'THE SIDEPOD S2 EPISODE 20', dateTime: '31 Oct 23 | 20:28' },
-    // { id: 3, name: 'THE SIDEPOD S2 EPISODE 20', dateTime: '31 Oct 23 | 20:28' },
-    // { id: 4, name: 'THE SIDEPOD S2 EPISODE 20', dateTime: '31 Oct 23 | 20:28' },
-    // { id: 5, name: 'THE SIDEPOD S2 EPISODE 20', dateTime: '31 Oct 23 | 20:28' },
-    // { id: 6, name: 'THE SIDEPOD S2 EPISODE 20', dateTime: '31 Oct 23 | 20:28' },
-    // { id: 7, name: 'THE SIDEPOD S2 EPISODE 20', dateTime: '31 Oct 23 | 20:28' },
-    // { id: 8, name: 'THE SIDEPOD S2 EPISODE 20', dateTime: '31 Oct 23 | 20:28' },
-  ];
+import { useMemo, useState, useCallback } from 'react';
+import { Button, Table } from '@custom';
+import { toast } from 'react-hot-toast';
 
-  const columns: TableColumnType<{ id: number; name: string; dateTime: string }>[] = useMemo(
-    () => [
-      {
-        title: 'Name',
-        dataIndex: 'name' as const,
-        className: 'font-medium text-gray-800',
+import ServerKeys from '@/resources/server-keys';
+import { useDeletePodcastMutation } from '@redux/podcasts/podcasts-api';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+
+interface ITranscriptsList {
+  data: PodcastsListResponseType['data'] | undefined;
+}
+
+const TranscriptsList: FC<ITranscriptsList> = ({ data }) => {
+  const [deletePodcast] = useDeletePodcastMutation();
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
+
+  const handleDelete = useCallback(
+    async (podcastId: string) => {
+      setLoadingMap(prev => ({ ...prev, [podcastId]: true }));
+      try {
+        const { message } = await deletePodcast(podcastId).unwrap();
+        toast.success(message);
+      } catch (error: any) {
+        console.error(error);
+        toast.error(error?.data?.message || error.message || 'Something went wrong');
+      } finally {
+        setLoadingMap(prev => ({ ...prev, [podcastId]: false }));
+      }
+    },
+    [deletePodcast]
+  );
+
+  const { projectId } = useParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const handleViewClick = (row: Podcast) => {
+    navigate(`/projects/${projectId}/${row.podcastId}?title=${searchParams.get('title') ?? ''}`)
+  }
+
+  const columns: TableColumnType<Podcast>[] = useMemo(() => [
+    {
+      title: 'Name',
+      dataIndex: ServerKeys.NAME,
+      className: 'font-medium text-gray-800',
+    },
+    {
+      title: 'Upload Date & Time',
+      dataIndex: ServerKeys.UPDATED_AT,
+      className: 'text-gray-600',
+    },
+    {
+      title: 'Source',
+      dataIndex: ServerKeys.SOURCE_TYPE,
+      className: 'uppercase'
+    },
+    {
+      title: 'Action',
+      render: (row: Podcast) => {
+        const isLoading = loadingMap[row.podcastId] || false;
+        return (
+          <div className="flex gap-3">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => handleViewClick(row)}
+            >
+              View</Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-destructive"
+              loading={isLoading}
+              disabled={isLoading}
+              onClick={() => handleDelete(row.podcastId)}
+            >
+              Delete
+            </Button>
+          </div>
+        );
       },
-      {
-        title: 'Upload Date & Time',
-        dataIndex: 'dateTime' as const,
-        className: 'text-gray-600',
-      },
-      {
-        title: 'Action',
-        render: (
-          // _row: { id: number; name: string; dateTime: string }
-        ) => (<div className="flex gap-3">
-          <Button size="sm" variant="outline">View</Button>
-          <Button size="sm" variant="outline" className="text-destructive">Delete</Button>
-        </div>),
-      },
-    ], []);
+    },
+  ], [handleDelete, loadingMap]);
 
   return (
     <section className="rounded bg-card p-4 col-span-3">
       <h4 className="text-h4 mb-2">Your Files</h4>
-      <Table data={data} columns={columns} rowsPerPage={5} />
+      <Table<Podcast>
+        data={data?.list ?? []}
+        columns={columns}
+        rowsPerPage={5}
+      />
     </section>
   );
 };

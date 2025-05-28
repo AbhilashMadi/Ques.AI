@@ -3,8 +3,18 @@ import { memo, type FC } from 'react';
 import ServerKeys from '@resources/server-keys';
 import { useForm } from '@hooks/use-form'
 import { type AddTranscriptInput, addTranscriptValidationSchema } from '@schemas/add-transcript-schema';
+import { useCreatePodcastMutation } from '@/redux/podcasts/podcasts-api';
+import { toast } from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
 
-const AddYoutubeTranscriptForm: FC = memo(() => {
+interface IAddYoutubeTranscrptForm {
+  setClose: () => void;
+}
+
+const AddYoutubeTranscriptForm: FC<IAddYoutubeTranscrptForm> = memo(({ setClose }) => {
+  const [createPodcast, { isLoading }] = useCreatePodcastMutation();
+  const { projectId } = useParams();
+
   const { errors, values, handleBlur, handleChange, handleSubmit, resetForm, touched } = useForm<AddTranscriptInput>({
     initialValues: {
       [ServerKeys.TRANSCRIPT_NAME]: '',
@@ -12,7 +22,21 @@ const AddYoutubeTranscriptForm: FC = memo(() => {
       [ServerKeys.TRNASCRIPT_CATEGORY]: 'youtube'
     },
     validationSchema: addTranscriptValidationSchema,
-    onSubmit: (values) => console.log(values),
+    onSubmit: async (values) => {
+      try {
+        const { message } = await createPodcast({
+          projectId: projectId ?? '',
+          name: values.transcriptName,
+          sourceType: values.transcriptCategory,
+          transcript: values.transcript,
+        }).unwrap();
+        toast.success(message);
+        setClose();
+      } catch (error: any) {
+        console.error(error);
+        toast.error(error?.data?.message || error.message || 'Something went wrong');
+      }
+    },
   })
 
   return (<form className="flex flex-col gap-4" onSubmit={handleSubmit} onReset={resetForm}>
@@ -40,9 +64,12 @@ const AddYoutubeTranscriptForm: FC = memo(() => {
       <Button
         type="reset"
         variant="ghost"
-        className="text-destructive">Cancel</Button>
+        className="text-destructive"
+        disabled={isLoading}>Cancel</Button>
       <Button
-        className="bg-foreground">Upload</Button>
+        className="bg-foreground"
+        loading={isLoading}
+        disabled={isLoading}>Upload</Button>
     </div>
   </form>)
 })

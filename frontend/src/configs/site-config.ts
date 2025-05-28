@@ -10,7 +10,7 @@ export const SitePaths = {
   /* PRIVATE ROUTES */
   PROJECTS: '/projects',
   PROJECT_DASHBOARD: (projectId: string = ':projectId') => `/projects/${projectId}`,
-  EDIT_TRANSCRIPT: '/projects/:projectId/edit-transcript',
+  EDIT_TRANSCRIPT: '/projects/:projectId/:transcriptId',
   USER_PROFILE: '/projects/:projectId/user-profile',
 };
 

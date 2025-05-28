@@ -1,15 +1,20 @@
-import TranscriptsList from '@/components/transcripts-list';
+import { useFetchProjectPodcastsQuery } from '@/redux/podcasts/podcasts-api';
 import { rssImg, uploadImg, youtubeImg } from '@assets';
-import AddYoutubeTranscriptForm from '@components/add-youtube-transcript-form';
-import ChooseTranscriptTypeCard from '@components/choose-transcript-type-card';
-import DragDropPodcast from '@componentsdrag-drop-podcast';
 import { Modal } from '@custom';
 import { useCallback, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-type TranscriptType = 'rssFeed' | 'youtube' | '';
+import DragDropPodcast from '@/components/drag-drop-podcast';
+import TranscriptsList from '@/components/transcripts-list';
+import AddYoutubeTranscriptForm from '@components/add-youtube-transcript-form';
+import ChooseTranscriptTypeCard from '@components/choose-transcript-type-card';
+
+type TranscriptType = 'rss' | 'youtube' | 'upload' | '';
 
 export default function AddPodcastPage() {
   const [transcriptModel, setTranscriptModel] = useState<TranscriptType>('');
+  const { projectId } = useParams();
+  const { data } = useFetchProjectPodcastsQuery(projectId!);
 
   const setOpen = useCallback((transcript: TranscriptType) => { setTranscriptModel(transcript) }, []);
   const setClose = useCallback(() => setTranscriptModel(''), []);
@@ -20,7 +25,7 @@ export default function AddPodcastPage() {
       isOpen={transcriptModel === 'youtube'}
       onClose={setClose}
       className="max-w-2xl">
-      <AddYoutubeTranscriptForm />
+      <AddYoutubeTranscriptForm setClose={setClose} />
     </Modal>
     <section className="flex flex-col gap-4">
       <h3 className="text-h2">Add podcast</h3>
@@ -46,8 +51,9 @@ export default function AddPodcastPage() {
           description="Upload audio, video, or transcript files directly from your device to create a podcast."
         />
         {/* DragDropPodcast */}
-        {/* <DragDropPodcast /> */}
-        <TranscriptsList />
+        {data?.data?.list?.length
+          ? <TranscriptsList data={data?.data} />
+          : <DragDropPodcast />}
       </div>
     </section>
   </>);

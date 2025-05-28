@@ -1,11 +1,13 @@
-import { useState } from 'react';
 import { Button, Input } from '@components/custom';
+import useAuth from '@hooks/use-auth';
 import { MoveLeftIcon } from '@icons';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function UserProfilePage() {
   const navigate = useNavigate();
   const [selectedAvatar, setSelectedAvatar] = useState<number>(1);
+  const { user } = useAuth();
 
   return (
     <>
@@ -47,11 +49,11 @@ export default function UserProfilePage() {
 
         {/* Profile Form */}
         <form className="space-y-4 max-w-sm mx-auto">
-          <Input label="User Name" name="username" type="text" />
-          <Input label="Email Address" name="email" type="email" />
+          <Input label="User Name" name="username" type="text" value={user?.fullName} disabled />
+          <Input label="Email Address" name="email" type="email" value={user?.email} disabled />
           <div className="grid grid-cols-2 gap-4">
-            <Button type="button" variant="secondary">Update</Button>
-            <Button type="submit">Save</Button>
+            <Button type="button" variant="secondary" disabled>Update</Button>
+            <Button type="submit" disabled>Save</Button>
           </div>
         </form>
       </section>

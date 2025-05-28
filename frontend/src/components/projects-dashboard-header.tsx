@@ -1,17 +1,20 @@
 import LogoutButton from '@components/common/logout-button';
 import { Breadcrumb, Button, Tooltip } from '@custom';
-import { BellIcon, HomeIcon } from '@icons';
+import { BellIcon, HomeIcon, FileIcon } from '@icons';
 import { type FC } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const ProjectsDashboardHeader: FC = () => {
+  const [searchParams] = useSearchParams();
+
+  const breadcrumbRoutes = [
+    { label: 'Home', href: '/', icon: <HomeIcon height={18} /> },
+    { label: 'Projects', href: '/projects', icon: <FileIcon height={18} /> },
+    { label: searchParams.get('title') ?? '', href: '' },
+  ];
+
   return (<header className="grow flex justify-between w-full">
-    <Breadcrumb
-      items={[
-        { label: 'Home', href: '/', icon: <HomeIcon height={18} /> },
-        { label: 'Projects', href: '/projects', icon: <>F</> },
-        { label: 'My Project' },
-      ]}
-    />
+    <Breadcrumb items={breadcrumbRoutes} />
     <div className="flex gap-2">
       <Tooltip content="Notifications" position="left">
         <Button

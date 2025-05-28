@@ -16,7 +16,7 @@ const UserCard: FC<IUserCardProps> = ({ collapse }) => {
       <div className="avatar-sm avatar-1 rounded" />
       {!collapse && <div>
         <p>{user?.fullName}</p>
-        <p className="text-muted">{user?.email}</p>
+        <p className="text-muted break-all text-wrap">{user?.email}</p>
       </div>}
     </section>
   </Link>);
